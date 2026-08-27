@@ -1,0 +1,12 @@
+name = "news"
+
+---
+
+deactivate;
+conda create -n news python=3.12;
+conda activate news;
+git init;
+touch .gitignore;
+echo -e ".env\ndata/\n*.pyc\n__pycache__/" >> .gitignore;
+git add . && git commit -m "Updates";
+pip install -r requirements.txt
