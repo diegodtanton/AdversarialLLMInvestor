@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import subprocess
+from datetime import datetime
 from pathlib import Path
 
 
@@ -24,11 +25,13 @@ def main() -> None:
         ".",
     ])
 
+    commit_message = f"Updates {datetime.now():%Y-%m-%d %H:%M}"
+
     run([
         "git",
         "commit",
         "-m",
-        "Updates",
+        commit_message,
     ])
 
 
