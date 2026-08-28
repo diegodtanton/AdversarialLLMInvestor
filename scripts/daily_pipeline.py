@@ -6,9 +6,7 @@ import sys
 from pathlib import Path
 
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-ROOT = SCRIPT_DIR.parent
-
+ROOT = Path(__file__).resolve().parent.parent
 
 logging.basicConfig(
     level=logging.INFO,
