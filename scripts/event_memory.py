@@ -9,6 +9,7 @@ import re
 import shutil
 import sqlite3
 import uuid
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -59,6 +60,24 @@ EMBEDDING_DIMENSIONS = 512
 BATCH_SIZE = 10
 MAX_EVENT_CANDIDATES = 6
 TIMELINE_ITEMS_PER_EVENT = 4
+
+# A structured-output response can be syntactically valid while still
+# violating application-level constraints that JSON Schema cannot
+# express, for example:
+#
+# - returning every supplied story_id exactly once
+# - using matched_event_id only from that story's supplied candidates
+# - pairing SAME_EVENT with an actual matched historical event
+#
+# Retry those malformed model responses locally rather than failing
+# the entire Event Memory stage and waiting for daily_pipeline.py's
+# stage-level retry.
+MAX_EVENT_LINK_ATTEMPTS = int(
+    os.getenv(
+        "MAX_EVENT_LINK_ATTEMPTS",
+        "3",
+    )
+)
 
 
 # ============================================================
@@ -660,6 +679,50 @@ database.
 
 Your job is to decide how the current story relates to history.
 
+============================================================
+OUTPUT INTEGRITY
+============================================================
+
+This is critical.
+
+Return EXACTLY ONE decision for EVERY supplied current story.
+
+- Preserve every supplied story_id exactly.
+- Do not omit a story.
+- Do not return the same story_id twice.
+- Do not invent a story_id.
+- Do not return decisions for stories that were not supplied.
+- If 10 current stories are supplied, return exactly 10 decisions.
+- If 7 current stories are supplied, return exactly 7 decisions.
+
+For each story, matched_event_id may ONLY be:
+
+1. one of that story's supplied candidate_historical_events event_id
+   values, OR
+2. null.
+
+Never copy an event_id from another current story's candidate list.
+
+If relationship is SAME_EVENT:
+- matched_event_id MUST be populated.
+
+If relationship is CAUSE_OF, CONSEQUENCE_OF, or RELATED_CONTEXT:
+- matched_event_id MUST be populated because the relationship needs
+  an identified historical event.
+
+If relationship is UNRELATED:
+- matched_event_id MUST be null.
+
+If none of the supplied historical candidates is appropriate, use:
+- matched_event_id = null
+- relationship = UNRELATED
+
+Do not invent an historical event identifier.
+
+============================================================
+EVENT MATCHING
+============================================================
+
 Be conservative about SAME_EVENT.
 
 Two stories are SAME_EVENT when they concern the same persistent
@@ -720,8 +783,10 @@ If the story deserves its own new event:
 - relationship may be UNRELATED, CAUSE_OF, CONSEQUENCE_OF, or
   RELATED_CONTEXT.
 - canonical_event_title and event_summary describe the NEW event.
-- If there is an important historical relationship, matched_event_id
-  points to that older event.
+- If relationship is CAUSE_OF, CONSEQUENCE_OF, or RELATED_CONTEXT,
+  matched_event_id points to the relevant older supplied event.
+- If there is no relevant supplied historical event, use UNRELATED
+  with matched_event_id = null.
 
 Do not overstate novelty.
 A dramatic headline can still contain little new information.
@@ -732,44 +797,365 @@ A dramatic headline can still contain little new information.
 # EVENT MATCHING
 # ============================================================
 
+class EventMemoryModelOutputError(
+    RuntimeError
+):
+    """
+    The API request succeeded, but the returned structured output
+    violated an application-level invariant that JSON Schema cannot
+    express.
+    """
+
+
+def validate_link_decisions(
+    batch_payload: list[dict],
+    decisions: list[dict],
+) -> None:
+    """
+    Validate semantic constraints across the complete model response.
+
+    JSON Schema validates shape, types, and enums, but cannot guarantee
+    cross-record/application-level constraints such as:
+
+    - exactly one decision for every supplied story_id
+    - no duplicate story_ids
+    - matched_event_id belonging to that story's candidate list
+    - relationship and matched_event_id being logically consistent
+
+    Raise EventMemoryModelOutputError so link_story_batch() can retry
+    only this model call without restarting the whole Event Memory
+    stage.
+    """
+
+    expected_by_id = {
+        item["story_id"]: item
+        for item in batch_payload
+    }
+
+    expected_ids = set(
+        expected_by_id
+    )
+
+    returned_ids = [
+        decision.get(
+            "story_id"
+        )
+        for decision in decisions
+    ]
+
+    returned_id_set = set(
+        returned_ids
+    )
+
+    counts = Counter(
+        returned_ids
+    )
+
+    missing_ids = sorted(
+        expected_ids
+        - returned_id_set
+    )
+
+    unexpected_ids = sorted(
+        story_id
+        for story_id
+        in returned_id_set
+        if story_id not in expected_ids
+    )
+
+    duplicate_ids = sorted(
+        story_id
+        for story_id, count
+        in counts.items()
+        if count > 1
+    )
+
+    errors = []
+
+    if (
+        len(decisions)
+        != len(batch_payload)
+    ):
+        errors.append(
+            "decision count mismatch: "
+            f"expected {len(batch_payload)}, "
+            f"received {len(decisions)}"
+        )
+
+    if missing_ids:
+        errors.append(
+            "missing story_id values: "
+            f"{missing_ids}"
+        )
+
+    if unexpected_ids:
+        errors.append(
+            "unexpected story_id values: "
+            f"{unexpected_ids}"
+        )
+
+    if duplicate_ids:
+        errors.append(
+            "duplicate story_id values: "
+            f"{duplicate_ids}"
+        )
+
+    # Only perform per-story validation for IDs that actually belong
+    # to this batch. Missing or unexpected IDs are already reported.
+    for decision in decisions:
+        story_id = decision.get(
+            "story_id"
+        )
+
+        if story_id not in expected_by_id:
+            continue
+
+        story_payload = (
+            expected_by_id[
+                story_id
+            ]
+        )
+
+        supplied_event_ids = {
+            candidate["event_id"]
+            for candidate
+            in story_payload.get(
+                "candidate_historical_events",
+                [],
+            )
+        }
+
+        matched_event_id = (
+            decision.get(
+                "matched_event_id"
+            )
+        )
+
+        relationship = (
+            decision.get(
+                "relationship"
+            )
+        )
+
+        # The model is explicitly forbidden from inventing an event ID
+        # or borrowing one from a different story's candidate list.
+        if (
+            matched_event_id
+            is not None
+            and matched_event_id
+            not in supplied_event_ids
+        ):
+            errors.append(
+                f"{story_id}: matched_event_id "
+                f"{matched_event_id!r} was not one "
+                "of the supplied candidate events"
+            )
+
+        if (
+            relationship
+            == "UNRELATED"
+        ):
+            if (
+                matched_event_id
+                is not None
+            ):
+                errors.append(
+                    f"{story_id}: relationship=UNRELATED "
+                    "must have matched_event_id=null"
+                )
+
+        elif relationship in {
+            "SAME_EVENT",
+            "CAUSE_OF",
+            "CONSEQUENCE_OF",
+            "RELATED_CONTEXT",
+        }:
+            if (
+                matched_event_id
+                is None
+            ):
+                errors.append(
+                    f"{story_id}: relationship="
+                    f"{relationship} requires a "
+                    "matched_event_id"
+                )
+
+    if errors:
+        raise EventMemoryModelOutputError(
+            "Invalid Event Memory model output: "
+            + "; ".join(
+                errors
+            )
+        )
+
+
 def link_story_batch(
     batch_payload: list[dict],
 ) -> list[dict]:
+    """
+    Ask Event Memory to classify one batch.
 
-    response = client.responses.create(
-        model=EVENT_MODEL,
-        reasoning={
-            "effort": EVENT_REASONING,
-        },
-        instructions=EVENT_MEMORY_INSTRUCTIONS,
-        input=json.dumps(
-            {
-                "current_stories": batch_payload,
+    Normal OpenAI/network errors are deliberately allowed to propagate.
+    The OpenAI client already has transport retries, and
+    daily_pipeline.py remains the final fallback for a failed stage.
+
+    This loop is specifically for successful API responses whose
+    content violates application-level invariants.
+    """
+
+    last_error: (
+        EventMemoryModelOutputError
+        | None
+    ) = None
+
+    validation_feedback: (
+        str
+        | None
+    ) = None
+
+    for attempt in range(
+        1,
+        MAX_EVENT_LINK_ATTEMPTS + 1,
+    ):
+        request_payload = {
+            "current_stories": (
+                batch_payload
+            ),
+        }
+
+        # On a semantic retry, tell the model exactly why its previous
+        # response was rejected. The complete batch is sent again
+        # because we require one fresh, internally consistent result
+        # for every story.
+        if validation_feedback:
+            request_payload[
+                "validation_feedback"
+            ] = (
+                "Your previous response was rejected by "
+                "application-level validation. Return the "
+                "COMPLETE current_stories batch again. Do "
+                "not return only the corrected items. Fix "
+                "all of the following problems: "
+                f"{validation_feedback}"
+            )
+
+        response = client.responses.create(
+            model=EVENT_MODEL,
+            reasoning={
+                "effort": EVENT_REASONING,
             },
-            ensure_ascii=False,
-        ),
-        text={
-            "format": {
-                "type": "json_schema",
-                "name": "event_memory_decisions",
-                "strict": True,
-                "schema": EVENT_LINK_SCHEMA,
-            }
-        },
-        max_output_tokens=12000,
-        store=False,
-    )
-
-    if not response.output_text:
-        raise RuntimeError(
-            "Event Memory returned no output."
+            instructions=(
+                EVENT_MEMORY_INSTRUCTIONS
+            ),
+            input=json.dumps(
+                request_payload,
+                ensure_ascii=False,
+            ),
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": (
+                        "event_memory_decisions"
+                    ),
+                    "strict": True,
+                    "schema": (
+                        EVENT_LINK_SCHEMA
+                    ),
+                }
+            },
+            max_output_tokens=12000,
+            store=False,
         )
 
-    result = json.loads(
-        response.output_text
-    )
+        try:
+            if not response.output_text:
+                raise (
+                    EventMemoryModelOutputError(
+                        "Event Memory returned "
+                        "no output text."
+                    )
+                )
 
-    return result["decisions"]
+            try:
+                result = json.loads(
+                    response.output_text
+                )
+
+                decisions = result[
+                    "decisions"
+                ]
+
+            except (
+                json.JSONDecodeError,
+                KeyError,
+                TypeError,
+            ) as exc:
+                raise (
+                    EventMemoryModelOutputError(
+                        "Event Memory returned "
+                        "unusable structured output."
+                    )
+                ) from exc
+
+            if not isinstance(
+                decisions,
+                list,
+            ):
+                raise (
+                    EventMemoryModelOutputError(
+                        "Event Memory decisions "
+                        "was not a list."
+                    )
+                )
+
+            validate_link_decisions(
+                batch_payload,
+                decisions,
+            )
+
+            if attempt > 1:
+                logger.info(
+                    "Event Memory batch passed "
+                    "validation on attempt %d/%d",
+                    attempt,
+                    MAX_EVENT_LINK_ATTEMPTS,
+                )
+
+            return decisions
+
+        except (
+            EventMemoryModelOutputError
+        ) as exc:
+            last_error = exc
+
+            logger.warning(
+                "Event Memory batch output failed "
+                "validation on attempt %d/%d: %s",
+                attempt,
+                MAX_EVENT_LINK_ATTEMPTS,
+                exc,
+            )
+
+            if (
+                attempt
+                >= MAX_EVENT_LINK_ATTEMPTS
+            ):
+                break
+
+            validation_feedback = str(
+                exc
+            )
+
+            logger.info(
+                "Retrying malformed Event Memory "
+                "batch immediately"
+            )
+
+    raise RuntimeError(
+        "Event Memory returned invalid model "
+        f"output after {MAX_EVENT_LINK_ATTEMPTS} "
+        "attempts."
+    ) from last_error
 
 
 def create_event_id() -> str:
@@ -854,33 +1240,68 @@ def apply_decision(
     }
 
     matched_event_id = (
-        decision["matched_event_id"]
+        decision[
+            "matched_event_id"
+        ]
     )
-
-    if (
-        matched_event_id
-        and matched_event_id
-        not in supplied_event_ids
-    ):
-        logger.warning(
-            "Model returned event not supplied for %s: %s",
-            story_id,
-            matched_event_id,
-        )
-
-        matched_event_id = None
 
     relationship = decision[
         "relationship"
     ]
+
+    # These constraints should already have been checked by
+    # validate_link_decisions(). Keep them here as defensive
+    # invariants so a future refactor cannot silently write
+    # inconsistent relationships into SQLite.
+    if (
+        matched_event_id
+        is not None
+        and matched_event_id
+        not in supplied_event_ids
+    ):
+        raise RuntimeError(
+            f"{story_id}: model returned "
+            f"unsupplied matched_event_id "
+            f"{matched_event_id!r}."
+        )
+
+    if (
+        relationship
+        == "UNRELATED"
+    ):
+        if (
+            matched_event_id
+            is not None
+        ):
+            raise RuntimeError(
+                f"{story_id}: UNRELATED "
+                "decision unexpectedly has "
+                "matched_event_id."
+            )
+
+    elif relationship in {
+        "SAME_EVENT",
+        "CAUSE_OF",
+        "CONSEQUENCE_OF",
+        "RELATED_CONTEXT",
+    }:
+        if (
+            matched_event_id
+            is None
+        ):
+            raise RuntimeError(
+                f"{story_id}: {relationship} "
+                "decision is missing "
+                "matched_event_id."
+            )
 
     # --------------------------------------------------------
     # SAME EVENT
     # --------------------------------------------------------
 
     if (
-        relationship == "SAME_EVENT"
-        and matched_event_id
+        relationship
+        == "SAME_EVENT"
     ):
         event_id = matched_event_id
 
@@ -933,8 +1354,7 @@ def apply_decision(
         related_event_id = (
             matched_event_id
             if (
-                matched_event_id
-                and relationship
+                relationship
                 in {
                     "CAUSE_OF",
                     "CONSEQUENCE_OF",
@@ -1180,9 +1600,17 @@ def process_news_payload(
             for item in batch
         }
 
-        if set(
-            decisions_by_id
-        ) != expected_ids:
+        # Defense in depth. link_story_batch() already performs the
+        # stronger validation, but keep this invariant immediately
+        # before any database writes.
+        if (
+            len(decisions)
+            != len(batch)
+            or len(decisions_by_id)
+            != len(batch)
+            or set(decisions_by_id)
+            != expected_ids
+        ):
             raise RuntimeError(
                 "Event Memory did not return exactly "
                 "one decision for every story."
@@ -1350,6 +1778,12 @@ def build_enriched_output(
                 ],
             ),
         ).fetchone()
+
+        if not event_row:
+            raise RuntimeError(
+                f"Story {story_id} references missing "
+                f"event {story_row['event_id']}."
+            )
 
         timeline = (
             get_recent_event_timeline(
