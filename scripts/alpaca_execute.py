@@ -1212,6 +1212,11 @@ def main():
         ].upper()
     )
 
+    if ticker == "STRA":
+        raise RuntimeError(
+            "Trading STRA is prohibited."
+        )
+
     direction = trade[
         "direction"
     ]

@@ -286,7 +286,7 @@ Do not feel pressure to choose the least-bad candidate.
 If none clears a high bar, return NO_TRADE.
 
 ============================================================
-IMPORTANT TIME HORIZON
+TIME HORIZON
 ============================================================
 
 The actual trading system will close a position when either:
@@ -297,20 +297,45 @@ The actual trading system will close a position when either:
 Therefore you are evaluating a SHORT-DURATION implementation of
 Gilman's thesis.
 
-Gilman may have identified a fundamentally correct six-to-twelve-month
-relationship that is still a bad 28-day trade.
+Gilman may identify a fundamentally correct six-to-twelve-month
+relationship that is still a poor trade over the next four weeks.
 
-Reject those.
+Reject those when there is no plausible mechanism for the thesis to
+begin affecting market expectations within the holding period.
+
+However, DO NOT interpret the +10% take-profit level as a requirement
+that you must confidently forecast a 10% move.
+
+The +10% level is an execution rule, not an expected-return hurdle.
+
+A trade can be attractive even if your base case is a smaller move,
+provided that:
+
+- expected return over the next four weeks is meaningfully favorable,
+- downside and uncertainty are acceptable,
+- there is a credible path for the thesis to begin being recognized,
+- and there is a meaningful probability of reaching the +10% exit
+  before the 28-day time limit.
+
+Evaluate the distribution of possible outcomes rather than asking only
+whether a specific catalyst will mechanically produce a 10% move.
+
+For example, a trade with a plausible base case of +5% to +8%, limited
+downside, and a reasonable chance of exceeding +10% may be superior to
+a highly speculative trade with a possible +20% outcome but large
+downside risk.
 
 You need a plausible reason the thesis could begin affecting investor
 expectations, reported economics, guidance, contracts, regulation,
-orders, sentiment or another material variable within roughly four
-weeks.
+orders, sentiment, positioning, or another material variable within
+roughly four weeks.
 
 Do not require the entire fundamental thesis to play out within four
 weeks.
 
-But there should be a plausible repricing mechanism.
+But there should be a credible near-term repricing mechanism. A thesis
+whose economic consequences are unlikely to become visible or
+important until many months later should normally be rejected.
 
 ============================================================
 WHAT TO EXAMINE
