@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import subprocess
 import sys
 import time
 from pathlib import Path
 
 import requests
+from alpaca.trading.client import TradingClient
+from dotenv import load_dotenv
 
 
 # ============================================================
@@ -16,6 +19,18 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
+
+load_dotenv(
+    ROOT / ".env"
+)
+
+ALPACA_API_KEY = os.environ[
+    "ALPACA_API_KEY"
+]
+
+ALPACA_SECRET_KEY = os.environ[
+    "ALPACA_SECRET_KEY"
+]
 
 
 logging.basicConfig(
@@ -26,19 +41,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-STAGES = [
+# These stages maintain the daily news/event history even when
+# financial markets are closed.
+ALWAYS_RUN_STAGES = [
     "scripts.news_collect",
     "scripts.event_memory",
+]
+
+
+# These stages only run while the regular US equity market is open.
+MARKET_OPEN_STAGES = [
+    "scripts.position_manager",
+
     "scripts.gilman",
     "scripts.market_context",
     "scripts.brody",
 
-    # Add this once built:
-    # "scripts.position_manager",
-
     "scripts.alpaca_execute",
 ]
-
 
 # ------------------------------------------------------------
 # CONNECTIVITY / RETRY
@@ -46,7 +66,7 @@ STAGES = [
 
 MAX_CONNECTIVITY_ATTEMPTS = 5
 
-# 15 minutes, as you suggested.
+# 15 minutes.
 CONNECTIVITY_RETRY_SECONDS = 15 * 60
 
 # If a normal stage starts but dies from a transient API/network
@@ -67,8 +87,24 @@ CONNECTIVITY_TIMEOUT_SECONDS = 10
 # an error. alpaca_execute.py should handle order reconciliation
 # and idempotency internally.
 NON_RETRYABLE_STAGES = {
+    "scripts.position_manager",
     "scripts.alpaca_execute",
 }
+
+
+# ============================================================
+# ALPACA
+# ============================================================
+
+# We only use this client here to ask Alpaca whether the regular
+# US equity market is currently open.
+#
+# Execution remains isolated inside alpaca_execute.py.
+trading_client = TradingClient(
+    ALPACA_API_KEY,
+    ALPACA_SECRET_KEY,
+    paper=True,
+)
 
 
 # ============================================================
@@ -92,7 +128,10 @@ def has_internet() -> bool:
             allow_redirects=False,
         )
 
-        return response.status_code == 204
+        return (
+            response.status_code
+            == 204
+        )
 
     except requests.RequestException:
         return False
@@ -107,6 +146,7 @@ def wait_for_internet() -> None:
             logger.info(
                 "✓ Internet connection is available"
             )
+
             return
 
         logger.warning(
@@ -133,6 +173,47 @@ def wait_for_internet() -> None:
         time.sleep(
             CONNECTIVITY_RETRY_SECONDS
         )
+
+
+# ============================================================
+# MARKET CLOCK
+# ============================================================
+
+def is_market_open() -> bool:
+    """
+    Ask Alpaca whether the regular US equity market is open now.
+
+    This naturally handles:
+    - weekends
+    - exchange holidays
+    - normal trading days
+    - early-close sessions
+
+    We deliberately use the brokerage's own market state rather
+    than maintaining a separate holiday calendar.
+    """
+
+    clock = (
+        trading_client
+        .get_clock()
+    )
+
+    if clock.is_open:
+        logger.info(
+            "✓ US equity market is open | "
+            "next close: %s",
+            clock.next_close,
+        )
+
+        return True
+
+    logger.info(
+        "US equity market is closed | "
+        "next open: %s",
+        clock.next_open,
+    )
+
+    return False
 
 
 # ============================================================
@@ -259,10 +340,6 @@ def run_stage(
 
 
 # ============================================================
-# VALIDATORS
-# ============================================================
-
-# ============================================================
 # VALIDATION
 # ============================================================
 
@@ -328,6 +405,55 @@ def validate_event_memory() -> None:
     )
 
 
+def validate_position_manager() -> None:
+    data = load_json(
+        DATA_DIR
+        / "position_manager_latest.json"
+    )
+
+    managed = data.get(
+        "managed_count"
+    )
+
+    closed = data.get(
+        "closed_count"
+    )
+
+    holding = data.get(
+        "holding_count"
+    )
+
+    pending = data.get(
+        "pending_exit_count"
+    )
+
+    for name, value in {
+        "managed_count": managed,
+        "closed_count": closed,
+        "holding_count": holding,
+        "pending_exit_count": pending,
+    }.items():
+        if not isinstance(
+            value,
+            int,
+        ):
+            raise RuntimeError(
+                f"position_manager has invalid {name}."
+            )
+
+    logger.info(
+        "✓ POSITION MANAGER: "
+        "%d managed | "
+        "%d closed | "
+        "%d holding | "
+        "%d pending exit",
+        managed,
+        closed,
+        holding,
+        pending,
+    )
+
+
 def validate_gilman() -> None:
     data = load_json(
         DATA_DIR / "gilman_latest.json"
@@ -382,7 +508,9 @@ def validate_gilman() -> None:
     )
 
     if (
-        trades.get("trade_count")
+        trades.get(
+            "trade_count"
+        )
         != trade_count
     ):
         raise RuntimeError(
@@ -654,6 +782,9 @@ VALIDATORS = {
     "scripts.event_memory": (
         validate_event_memory
     ),
+    "scripts.position_manager": (
+        validate_position_manager
+    ),
     "scripts.gilman": (
         validate_gilman
     ),
@@ -667,6 +798,32 @@ VALIDATORS = {
         validate_alpaca_execute
     ),
 }
+
+
+# ============================================================
+# PIPELINE HELPERS
+# ============================================================
+
+def run_and_validate(
+    module: str,
+) -> None:
+
+    run_stage(
+        module
+    )
+
+    validator = VALIDATORS.get(
+        module
+    )
+
+    if validator:
+        # Validation failures deliberately DO NOT retry.
+        #
+        # If a script exited successfully but produced bad or
+        # inconsistent output, that probably isn't a Wi-Fi
+        # problem. Fail loudly instead of paying to rerun it
+        # repeatedly.
+        validator()
 
 
 # ============================================================
@@ -686,24 +843,59 @@ def main():
     # Important for the "opened laptop at coffee shop" case.
     wait_for_internet()
 
-    for module in STAGES:
+    # --------------------------------------------------------
+    # DAILY NEWS / EVENT MEMORY
+    #
+    # Run these every calendar day, including weekends and
+    # exchange holidays.
+    #
+    # This keeps Event Memory continuous and prevents Monday's
+    # 26-hour news window from losing weekend developments.
+    # --------------------------------------------------------
 
-        run_stage(
+    for module in ALWAYS_RUN_STAGES:
+        run_and_validate(
             module
         )
 
-        validator = VALIDATORS.get(
-            module
+    # --------------------------------------------------------
+    # MARKET GATE
+    #
+    # Gilman, market context, Brody, and execution only run while
+    # regular US equity trading is actually open.
+    #
+    # Alpaca's clock handles weekends, exchange holidays, and
+    # early closes, so we do not maintain a separate calendar.
+    # --------------------------------------------------------
+
+    wait_for_internet()
+
+    if not is_market_open():
+        logger.info(
+            "============================================================"
         )
 
-        if validator:
-            # Validation failures deliberately DO NOT retry.
-            #
-            # If a script exited successfully but produced bad or
-            # inconsistent output, that probably isn't a Wi-Fi
-            # problem. Fail loudly instead of paying to rerun it
-            # repeatedly.
-            validator()
+        logger.info(
+            "DAILY PIPELINE COMPLETE: "
+            "MARKET CLOSED"
+        )
+
+        logger.info(
+            "News collection and Event Memory completed. "
+            "Skipping Gilman → Market Context → "
+            "Brody → Alpaca."
+        )
+
+        return
+
+    # --------------------------------------------------------
+    # INVESTMENT / EXECUTION PIPELINE
+    # --------------------------------------------------------
+
+    for module in MARKET_OPEN_STAGES:
+        run_and_validate(
+            module
+        )
 
     logger.info(
         "============================================================"

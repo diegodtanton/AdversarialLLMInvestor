@@ -412,3 +412,76 @@ PydanticSerializationUnexpectedValue: Expected `ActionFind` - serialized value m
   PydanticSerializationUnexpectedValue(Expected `ActionFind` - serialized value may not be as expected [field_name='action', input_value=ActionSearch(type='search...name='oai-calculator')]), input_type=ActionSearch])
   return self.__pydantic_serializer__.to_python(
 2026-08-28 15:50:09,178 | INFO | Gilman analyzing stories 21-30 of 100
+2026-08-28 15:53:02,279 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 15:53:02,493 | INFO | Gilman analyzing stories 31-40 of 100
+2026-08-28 15:53:26,924 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 15:53:26,974 | INFO | Gilman analyzing stories 41-50 of 100
+2026-08-28 15:55:02,222 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 15:55:02,350 | INFO | Gilman analyzing stories 51-60 of 100
+2026-08-28 15:57:40,908 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 15:57:41,093 | INFO | Gilman analyzing stories 61-70 of 100
+2026-08-28 15:59:17,879 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 15:59:17,983 | INFO | Gilman analyzing stories 71-80 of 100
+2026-08-28 16:02:02,546 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 16:02:02,679 | INFO | Gilman analyzing stories 81-90 of 100
+2026-08-28 16:04:04,351 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 16:04:04,544 | INFO | Gilman analyzing stories 91-100 of 100
+2026-08-28 16:04:25,723 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 16:04:25,861 | INFO | Gilman produced 8 TRADE ideas and 92 NO_TRADE decisions
+2026-08-28 16:04:25,861 | INFO | Wrote /Users/diegotanton/Desktop/News/data/gilman_latest.json
+2026-08-28 16:04:25,876 | INFO | Wrote /Users/diegotanton/Desktop/News/data/gilman_trades_latest.json
+2026-08-28 16:04:26,524 | INFO | Completed stage: scripts.gilman
+2026-08-28 16:04:26,553 | INFO | ✓ GILMAN: 8 TRADE | 92 NO_TRADE
+2026-08-28 16:04:26,741 | INFO | ✓ Internet connection is available
+2026-08-28 16:04:26,742 | INFO | scripts.market_context attempt 1/3
+2026-08-28 16:04:26,742 | INFO | ============================================================
+2026-08-28 16:04:26,742 | INFO | Starting stage: scripts.market_context
+2026-08-28 16:04:29,554 | INFO | Gilman supplied 8 trades
+2026-08-28 16:04:30,095 | INFO | Collecting market context for CME
+2026-08-28 16:04:31,001 | INFO | Collecting market context for RHPL
+2026-08-28 16:04:31,589 | ERROR | HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: RHPL"}}}
+2026-08-28 16:04:32,028 | ERROR | $RHPL: No data found, symbol may be delisted
+2026-08-28 16:04:32,034 | ERROR | 
+1 Failed download:
+2026-08-28 16:04:32,034 | ERROR | ['RHPL']: No data found, symbol may be delisted
+2026-08-28 16:04:32,040 | ERROR | Market context failed for RHPL
+Traceback (most recent call last):
+  File "/Users/diegotanton/Desktop/News/scripts/market_context.py", line 558, in main
+    build_context(
+  File "/Users/diegotanton/Desktop/News/scripts/market_context.py", line 482, in build_context
+    daily = get_daily_context(
+            ^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/News/scripts/market_context.py", line 125, in get_daily_context
+    raise RuntimeError(
+RuntimeError: No daily yfinance data for RHPL
+2026-08-28 16:04:32,051 | INFO | Collecting market context for CRSP
+2026-08-28 16:04:33,371 | INFO | Collecting market context for NVO
+2026-08-28 16:04:34,274 | INFO | Collecting market context for GEO
+2026-08-28 16:04:35,280 | INFO | Collecting market context for FRO
+2026-08-28 16:04:36,674 | INFO | Collecting market context for HAL
+2026-08-28 16:04:37,709 | INFO | Collecting market context for CACI
+2026-08-28 16:04:38,601 | INFO | Wrote /Users/diegotanton/Desktop/News/data/market_context_latest.json
+2026-08-28 16:04:38,734 | INFO | Completed stage: scripts.market_context
+2026-08-28 16:04:38,739 | INFO | ✓ MARKET CONTEXT: 8 candidates
+2026-08-28 16:04:38,891 | INFO | ✓ Internet connection is available
+2026-08-28 16:04:38,891 | INFO | scripts.brody attempt 1/3
+2026-08-28 16:04:38,892 | INFO | ============================================================
+2026-08-28 16:04:38,892 | INFO | Starting stage: scripts.brody
+2026-08-28 16:04:41,100 | INFO | Starting Brody
+2026-08-28 16:04:41,101 | INFO | Evaluating 8 Gilman candidates
+2026-08-28 16:06:41,735 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-28 16:06:42,094 | INFO | Wrote /Users/diegotanton/Desktop/News/data/2026-08-28.brody.json
+2026-08-28 16:06:42,094 | INFO | Wrote /Users/diegotanton/Desktop/News/data/brody_latest.json
+2026-08-28 16:06:42,095 | INFO | BRODY: NO_TRADE
+2026-08-28 16:06:42,095 | INFO | Brody complete
+2026-08-28 16:06:42,338 | INFO | Completed stage: scripts.brody
+2026-08-28 16:06:42,346 | INFO | ✓ BRODY: NO_TRADE
+2026-08-28 16:06:42,509 | INFO | ✓ Internet connection is available
+2026-08-28 16:06:42,509 | INFO | ============================================================
+2026-08-28 16:06:42,509 | INFO | Starting stage: scripts.alpaca_execute
+2026-08-28 16:06:43,825 | INFO | Starting Alpaca PAPER executor
+2026-08-28 16:06:43,826 | INFO | Brody selected NO_TRADE. No order will be submitted.
+2026-08-28 16:06:43,933 | INFO | Completed stage: scripts.alpaca_execute
+2026-08-28 16:06:43,938 | INFO | ✓ ALPACA: NO_TRADE
+2026-08-28 16:06:43,938 | INFO | ============================================================
+2026-08-28 16:06:43,938 | INFO | DAILY PIPELINE SUCCESS
