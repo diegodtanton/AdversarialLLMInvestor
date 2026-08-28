@@ -44,7 +44,7 @@ BRODY_MODEL = os.getenv(
 
 BRODY_REASONING = os.getenv(
     "BRODY_REASONING",
-    "xhigh",
+    "medium",
 )
 
 
@@ -569,6 +569,10 @@ def analyze(
                 "strict": True,
                 "schema": BRODY_SCHEMA,
             }
+        },
+
+        prompt_cache_options={
+            "mode": "explicit",
         },
 
         max_output_tokens=16000,

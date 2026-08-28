@@ -61,7 +61,7 @@ GILMAN_MODEL = os.getenv(
 # in .env if you explicitly want max reasoning.
 GILMAN_REASONING = os.getenv(
     "GILMAN_REASONING",
-    "xhigh",
+    "high",
 )
 
 BATCH_SIZE = 10
@@ -675,10 +675,6 @@ def analyze_batch(
             }
         ],
 
-        # Search is available when useful.
-        #
-        # Any TRADE without actual web evidence is rejected
-        # by our Python validator below.
         tool_choice="auto",
 
         include=[
@@ -701,6 +697,10 @@ def analyze_batch(
                     GILMAN_SCHEMA
                 ),
             }
+        },
+
+        prompt_cache_options={
+            "mode": "explicit",
         },
 
         max_output_tokens=20000,
