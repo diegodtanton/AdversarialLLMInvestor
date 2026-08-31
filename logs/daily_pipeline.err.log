@@ -1561,3 +1561,375 @@ Traceback (most recent call last):
   File "/Users/diegotanton/Desktop/News/scripts/daily_pipeline.py", line 433, in validate_email_report
     raise RuntimeError(
 RuntimeError: Email report contained 25 stories; expected 50.
+2026-08-31 09:15:29,966 | INFO | ============================================================
+2026-08-31 09:15:29,967 | INFO | Starting daily news → Gilman → Brody → Alpaca pipeline
+2026-08-31 09:15:30,124 | INFO | ✓ Internet connection is available
+2026-08-31 09:15:30,668 | INFO | ✓ Internet connection is available
+2026-08-31 09:15:30,668 | INFO | scripts.news_collect attempt 1/3
+2026-08-31 09:15:30,668 | INFO | ============================================================
+2026-08-31 09:15:30,668 | INFO | Starting stage: scripts.news_collect
+2026-08-31 09:15:34,643 | INFO | Starting daily RSS news update
+2026-08-31 09:15:34,644 | INFO | Looking back 26 hours
+2026-08-31 09:15:34,644 | INFO | Configured RSS feeds: 32
+2026-08-31 09:15:34,644 | INFO | Fetching RSS: Google News - Top Stories
+2026-08-31 09:15:34,918 | INFO | Fetched 38 entries from Google News - Top Stories
+2026-08-31 09:15:34,919 | INFO | Fetching RSS: Google News - World
+2026-08-31 09:15:35,178 | INFO | Fetched 70 entries from Google News - World
+2026-08-31 09:15:35,179 | INFO | Fetching RSS: Google News - US
+2026-08-31 09:15:35,515 | INFO | Fetched 66 entries from Google News - US
+2026-08-31 09:15:35,515 | INFO | Fetching RSS: Google News - Business
+2026-08-31 09:15:35,830 | INFO | Fetched 70 entries from Google News - Business
+2026-08-31 09:15:35,830 | INFO | Fetching RSS: Google News - Technology
+2026-08-31 09:15:36,146 | INFO | Fetched 64 entries from Google News - Technology
+2026-08-31 09:15:36,146 | INFO | Fetching RSS: Google News - Science
+2026-08-31 09:15:36,432 | INFO | Fetched 70 entries from Google News - Science
+2026-08-31 09:15:36,433 | INFO | Fetching RSS: Google News - Health
+2026-08-31 09:15:36,757 | INFO | Fetched 70 entries from Google News - Health
+2026-08-31 09:15:36,758 | INFO | Fetching RSS: Google News - Sports
+2026-08-31 09:15:37,056 | INFO | Fetched 58 entries from Google News - Sports
+2026-08-31 09:15:37,056 | INFO | Fetching RSS: Google News - Entertainment
+2026-08-31 09:15:37,343 | INFO | Fetched 70 entries from Google News - Entertainment
+2026-08-31 09:15:37,344 | INFO | Fetching RSS: BBC - Top Stories
+2026-08-31 09:15:37,599 | INFO | Fetched 32 entries from BBC - Top Stories
+2026-08-31 09:15:37,599 | INFO | Fetching RSS: BBC - World
+2026-08-31 09:15:37,649 | INFO | Fetched 27 entries from BBC - World
+2026-08-31 09:15:37,649 | INFO | Fetching RSS: BBC - Business
+2026-08-31 09:15:37,789 | INFO | Fetched 37 entries from BBC - Business
+2026-08-31 09:15:37,789 | INFO | Fetching RSS: BBC - Technology
+2026-08-31 09:15:37,881 | INFO | Fetched 20 entries from BBC - Technology
+2026-08-31 09:15:37,881 | INFO | Fetching RSS: BBC - Science
+2026-08-31 09:15:38,108 | INFO | Fetched 42 entries from BBC - Science
+2026-08-31 09:15:38,108 | INFO | Fetching RSS: BBC - Health
+2026-08-31 09:15:38,270 | INFO | Fetched 51 entries from BBC - Health
+2026-08-31 09:15:38,270 | INFO | Fetching RSS: NPR - News
+2026-08-31 09:15:38,447 | INFO | Fetched 10 entries from NPR - News
+2026-08-31 09:15:38,447 | INFO | Fetching RSS: NYT - Home Page
+2026-08-31 09:15:38,621 | INFO | Fetched 21 entries from NYT - Home Page
+2026-08-31 09:15:38,621 | INFO | Fetching RSS: NYT - World
+2026-08-31 09:15:38,720 | INFO | Fetched 58 entries from NYT - World
+2026-08-31 09:15:38,721 | INFO | Fetching RSS: NYT - US
+2026-08-31 09:15:38,773 | INFO | Fetched 20 entries from NYT - US
+2026-08-31 09:15:38,773 | INFO | Fetching RSS: NYT - Business
+2026-08-31 09:15:38,865 | INFO | Fetched 50 entries from NYT - Business
+2026-08-31 09:15:38,865 | INFO | Fetching RSS: NYT - Technology
+2026-08-31 09:15:38,928 | INFO | Fetched 27 entries from NYT - Technology
+2026-08-31 09:15:38,929 | INFO | Fetching RSS: NYT - Science
+2026-08-31 09:15:38,989 | INFO | Fetched 30 entries from NYT - Science
+2026-08-31 09:15:38,989 | INFO | Fetching RSS: NYT - Health
+2026-08-31 09:15:39,039 | INFO | Fetched 20 entries from NYT - Health
+2026-08-31 09:15:39,039 | INFO | Fetching RSS: Guardian - World
+2026-08-31 09:15:39,296 | INFO | Fetched 45 entries from Guardian - World
+2026-08-31 09:15:39,296 | INFO | Fetching RSS: Guardian - US
+2026-08-31 09:15:39,408 | INFO | Fetched 33 entries from Guardian - US
+2026-08-31 09:15:39,408 | INFO | Fetching RSS: Guardian - Business
+2026-08-31 09:15:39,537 | INFO | Fetched 19 entries from Guardian - Business
+2026-08-31 09:15:39,537 | INFO | Fetching RSS: Guardian - Technology
+2026-08-31 09:15:39,712 | INFO | Fetched 36 entries from Guardian - Technology
+2026-08-31 09:15:39,712 | INFO | Fetching RSS: Guardian - Science
+2026-08-31 09:15:39,816 | INFO | Fetched 28 entries from Guardian - Science
+2026-08-31 09:15:39,817 | INFO | Fetching RSS: CNN - Top Stories
+2026-08-31 09:15:39,993 | WARNING | Retrying (Retry(total=2, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/cnn_topstories.rss
+2026-08-31 09:15:42,120 | WARNING | Retrying (Retry(total=1, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/cnn_topstories.rss
+2026-08-31 09:15:46,246 | WARNING | Retrying (Retry(total=0, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/cnn_topstories.rss
+2026-08-31 09:15:46,371 | ERROR | Failed RSS feed: CNN - Top Stories
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connection.py", line 796, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connection.py", line 975, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               ^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 433, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 477, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 1041, in _create
+    self.do_handshake()
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 1319, in do_handshake
+    self._sslobj.do_handshake()
+ssl.SSLEOFError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='rss.cnn.com', port=443): Max retries exceeded with url: /rss/cnn_topstories.rss (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 825, in collect_articles
+    articles = fetch_feed(
+               ^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 719, in fetch_feed
+    response = session.get(
+               ^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 671, in get
+    return self.request("GET", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/adapters.py", line 727, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='rss.cnn.com', port=443): Max retries exceeded with url: /rss/cnn_topstories.rss (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+2026-08-31 09:15:46,384 | INFO | Fetching RSS: CNN - World
+2026-08-31 09:15:46,502 | WARNING | Retrying (Retry(total=2, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/edition_world.rss
+2026-08-31 09:15:48,694 | WARNING | Retrying (Retry(total=1, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/edition_world.rss
+2026-08-31 09:15:52,882 | WARNING | Retrying (Retry(total=0, connect=3, read=3, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)'))': /rss/edition_world.rss
+2026-08-31 09:15:53,002 | ERROR | Failed RSS feed: CNN - World
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connection.py", line 796, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connection.py", line 975, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               ^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 433, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 477, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 1041, in _create
+    self.do_handshake()
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/ssl.py", line 1319, in do_handshake
+    self._sslobj.do_handshake()
+ssl.SSLEOFError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/urllib3/util/retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='rss.cnn.com', port=443): Max retries exceeded with url: /rss/edition_world.rss (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 825, in collect_articles
+    articles = fetch_feed(
+               ^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 719, in fetch_feed
+    response = session.get(
+               ^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 671, in get
+    return self.request("GET", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/adapters.py", line 727, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='rss.cnn.com', port=443): Max retries exceeded with url: /rss/edition_world.rss (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+2026-08-31 09:15:53,005 | INFO | Fetching RSS: AP - Top News
+2026-08-31 09:15:53,144 | ERROR | Failed RSS feed: AP - Top News
+Traceback (most recent call last):
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 825, in collect_articles
+    articles = fetch_feed(
+               ^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/News/scripts/news_collect.py", line 724, in fetch_feed
+    response.raise_for_status()
+  File "/Users/diegotanton/opt/anaconda3/envs/news/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apnews.com/hub/ap-top-news?format=rss
+2026-08-31 09:15:53,147 | INFO | Fetching RSS: Al Jazeera
+2026-08-31 09:15:53,309 | INFO | Fetched 25 entries from Al Jazeera
+2026-08-31 09:15:53,309 | INFO | RSS collection complete: 29 successful feeds, 3 failed feeds, 1207 raw entries
+2026-08-31 09:15:53,319 | INFO | 564 unique recent publisher articles remain after filtering/deduplication
+2026-08-31 09:15:53,319 | INFO | Skipped 549 old entries and 0 undated entries
+2026-08-31 09:15:53,320 | INFO | Embedding articles 1-200 of 564
+2026-08-31 09:15:55,299 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:15:55,503 | INFO | Embedding articles 201-400 of 564
+2026-08-31 09:15:56,014 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:15:56,384 | INFO | Embedding articles 401-564 of 564
+2026-08-31 09:15:56,833 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:15:57,095 | INFO | Clustering 564 articles
+2026-08-31 09:15:57,456 | INFO | 506 distinct story clusters found
+2026-08-31 09:15:57,456 | INFO | Top 20 clusters before GPT summarization:
+2026-08-31 09:15:57,456 | INFO | #1 | score=17.45 | sources=4 | articles=4 | Nepal-Tibet deaths from flash flooding rise amid race to free workers in tunnel
+2026-08-31 09:15:57,456 | INFO | #2 | score=16.77 | sources=3 | articles=5 | Grand Canyon braces for more storms after flash flood leaves one person dead
+2026-08-31 09:15:57,456 | INFO | #3 | score=15.88 | sources=3 | articles=4 | Nearly 20 people still missing after ferry capsizes ⁠off northern Cyprus
+2026-08-31 09:15:57,456 | INFO | #4 | score=15.75 | sources=4 | articles=4 | Icelandic voters reject a proposal to restart negotiations to join the European Union
+2026-08-31 09:15:57,456 | INFO | #5 | score=15.58 | sources=3 | articles=3 | Venus Williams bows out after 2am following latest start in US Open history
+2026-08-31 09:15:57,456 | INFO | #6 | score=15.15 | sources=3 | articles=3 | Headteacher saves 900 children from deadly flash flood in Nepal
+2026-08-31 09:15:57,456 | INFO | #7 | score=14.09 | sources=2 | articles=3 | Man City sign Palmeiras winger Allan for £34m - BBC
+2026-08-31 09:15:57,456 | INFO | #8 | score=13.91 | sources=2 | articles=2 | A U.S. strike on Iran breaks a month-long lull, and Iran fires back
+2026-08-31 09:15:57,457 | INFO | #9 | score=13.68 | sources=2 | articles=2 | All-time great Aaron Donald comes out of retirement to rejoin stacked LA Rams
+2026-08-31 09:15:57,457 | INFO | #10 | score=13.66 | sources=2 | articles=2 | Badenoch appoints Andrew Griffith shadow chancellor in sweeping reshuffle
+2026-08-31 09:15:57,457 | INFO | #11 | score=13.61 | sources=2 | articles=2 | Barcola joins Liverpool from PSG in £123m move
+2026-08-31 09:15:57,457 | INFO | #12 | score=13.56 | sources=2 | articles=2 | Experts, lawyers puzzled over US-Venezuela oil deal, call for contract transparency
+2026-08-31 09:15:57,457 | INFO | #13 | score=13.52 | sources=2 | articles=5 | Man arrested after Swiss rave shooting that killed 22-year-old woman - BBC
+2026-08-31 09:15:57,457 | INFO | #14 | score=13.52 | sources=2 | articles=2 | Fuel supplier sues distributor for nearly $4M over gas allegedly sold at Trump-promoted Freedom Fuel stations
+2026-08-31 09:15:57,457 | INFO | #15 | score=13.34 | sources=2 | articles=2 | Israel signs €3 billion arms export deal with Greece
+2026-08-31 09:15:57,457 | INFO | #16 | score=13.09 | sources=2 | articles=2 | First US military attacks on Iran in a month prompt retaliation
+2026-08-31 09:15:57,457 | INFO | #17 | score=12.77 | sources=2 | articles=2 | How Tim Cook made Apple one of the world’s most valuable companies
+2026-08-31 09:15:57,457 | INFO | #18 | score=12.65 | sources=2 | articles=2 | AI could cause global economic downturn, Bank of England governor tells G20
+2026-08-31 09:15:57,457 | INFO | #19 | score=12.63 | sources=2 | articles=2 | UAE says it intercepted an Iranian drone after weekend US strikes on rocket launchers in Iran
+2026-08-31 09:15:57,457 | INFO | #20 | score=12.56 | sources=2 | articles=2 | Central banks in Egypt, UAE join forces as US moves to cut Banque Misr from dollar system due to Iran links
+2026-08-31 09:15:57,457 | INFO | Summarizing stories 1-20 of 100
+2026-08-31 09:16:08,937 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:16:09,203 | INFO | Summarizing stories 21-40 of 100
+2026-08-31 09:16:20,165 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:16:20,225 | INFO | Summarizing stories 41-60 of 100
+2026-08-31 09:16:31,648 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:16:31,650 | INFO | Summarizing stories 61-80 of 100
+2026-08-31 09:16:42,455 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:16:42,493 | INFO | Summarizing stories 81-100 of 100
+2026-08-31 09:16:52,433 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:16:52,465 | INFO | Wrote /Users/diegotanton/Desktop/News/data/2026-08-31.json
+2026-08-31 09:16:52,465 | INFO | Wrote /Users/diegotanton/Desktop/News/data/latest.json
+2026-08-31 09:16:52,465 | INFO | Wrote /Users/diegotanton/Desktop/News/data/2026-08-31.debug.json
+2026-08-31 09:16:52,465 | INFO | Daily RSS news update complete
+2026-08-31 09:16:52,975 | INFO | Completed stage: scripts.news_collect
+2026-08-31 09:16:52,976 | INFO | ✓ NEWS COLLECT: 100 stories
+2026-08-31 09:16:53,122 | INFO | ✓ Internet connection is available
+2026-08-31 09:16:53,122 | INFO | scripts.event_memory attempt 1/3
+2026-08-31 09:16:53,122 | INFO | ============================================================
+2026-08-31 09:16:53,122 | INFO | Starting stage: scripts.event_memory
+2026-08-31 09:16:54,926 | INFO | 2026-08-31: 90 unprocessed stories
+2026-08-31 09:16:54,926 | INFO | Event Memory: stories 1-10 of 90 for 2026-08-31
+2026-08-31 09:16:56,049 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:14,101 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:17:14,561 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:14,567 | INFO | Event Memory: stories 11-20 of 90 for 2026-08-31
+2026-08-31 09:17:15,166 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:33,445 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:17:33,771 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:33,775 | INFO | Event Memory: stories 21-30 of 90 for 2026-08-31
+2026-08-31 09:17:33,940 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:53,707 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:17:54,208 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:17:54,213 | INFO | Event Memory: stories 31-40 of 90 for 2026-08-31
+2026-08-31 09:17:54,400 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:14,128 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:18:14,660 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:14,664 | INFO | Event Memory: stories 41-50 of 90 for 2026-08-31
+2026-08-31 09:18:14,866 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:32,488 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:18:32,833 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:32,837 | INFO | Event Memory: stories 51-60 of 90 for 2026-08-31
+2026-08-31 09:18:33,194 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:52,442 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:18:52,886 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:18:52,897 | INFO | Event Memory: stories 61-70 of 90 for 2026-08-31
+2026-08-31 09:18:53,200 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:17,735 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:19:18,247 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:18,251 | INFO | Event Memory: stories 71-80 of 90 for 2026-08-31
+2026-08-31 09:19:18,456 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:36,371 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:19:36,662 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:36,668 | INFO | Event Memory: stories 81-90 of 90 for 2026-08-31
+2026-08-31 09:19:36,894 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:56,512 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:19:56,932 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-31 09:19:56,981 | INFO | Wrote /Users/diegotanton/Desktop/News/data/2026-08-31.enriched.json
+2026-08-31 09:19:56,981 | INFO | Wrote /Users/diegotanton/Desktop/News/data/enriched_latest.json
+2026-08-31 09:19:57,010 | INFO | Event Memory complete
+2026-08-31 09:19:57,709 | INFO | Completed stage: scripts.event_memory
+2026-08-31 09:19:57,715 | INFO | ✓ EVENT MEMORY: 100 enriched stories
+2026-08-31 09:19:57,857 | INFO | ✓ Internet connection is available
+2026-08-31 09:19:57,857 | INFO | scripts.email_report attempt 1/3
+2026-08-31 09:19:57,857 | INFO | ============================================================
+2026-08-31 09:19:57,857 | INFO | Starting stage: scripts.email_report
+2026-08-31 09:20:00,043 | INFO | Starting daily email report
+2026-08-31 09:20:00,049 | INFO | Generating Trends digest with gpt-5.6-terra
+2026-08-31 09:20:14,867 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-31 09:20:15,216 | INFO | Trends digest generated
+2026-08-31 09:20:15,224 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-08-31 09:20:17,476 | INFO | Email sent successfully
+2026-08-31 09:20:17,477 | INFO | Daily email report complete
+2026-08-31 09:20:17,725 | INFO | Completed stage: scripts.email_report
+2026-08-31 09:20:17,726 | INFO | ✓ EMAIL REPORT: 25 stories sent
+2026-08-31 09:20:17,863 | INFO | ✓ Internet connection is available
+2026-08-31 09:20:18,062 | INFO | ✓ US equity market is open | next close: 2026-08-31 16:00:00-04:00
+2026-08-31 09:20:18,204 | INFO | ✓ Internet connection is available
+2026-08-31 09:20:18,204 | INFO | ============================================================
+2026-08-31 09:20:18,204 | INFO | Starting stage: scripts.position_manager
+2026-08-31 09:20:19,438 | INFO | Starting position manager
+2026-08-31 09:20:19,442 | INFO | Managed open positions: 0
+2026-08-31 09:20:19,443 | INFO | Wrote /Users/diegotanton/Desktop/News/data/position_manager_latest.json
+2026-08-31 09:20:19,444 | INFO | Position manager complete
+2026-08-31 09:20:19,553 | INFO | Completed stage: scripts.position_manager
+2026-08-31 09:20:19,554 | INFO | ✓ POSITION MANAGER: 0 managed | 0 closed | 0 holding | 0 pending exit
+2026-08-31 09:20:19,673 | INFO | ✓ Internet connection is available
+2026-08-31 09:20:19,673 | INFO | scripts.gilman attempt 1/3
+2026-08-31 09:20:19,673 | INFO | ============================================================
+2026-08-31 09:20:19,673 | INFO | Starting stage: scripts.gilman
+2026-08-31 09:20:20,939 | INFO | Gilman analyzing stories 1-10 of 100
