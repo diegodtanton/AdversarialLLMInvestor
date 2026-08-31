@@ -46,6 +46,7 @@ logger = logging.getLogger(__name__)
 ALWAYS_RUN_STAGES = [
     "scripts.news_collect",
     "scripts.event_memory",
+    "scripts.email_report",
 ]
 
 
@@ -402,6 +403,41 @@ def validate_event_memory() -> None:
     logger.info(
         "✓ EVENT MEMORY: %d enriched stories",
         len(stories),
+    )
+
+def validate_email_report() -> None:
+    data = load_json(
+        DATA_DIR
+        / "email_report_latest.json"
+    )
+
+    if (
+        data.get("status")
+        != "SENT"
+    ):
+        raise RuntimeError(
+            "Email report was not successfully sent."
+        )
+
+    story_count = data.get(
+        "story_count"
+    )
+
+    if (
+        not isinstance(
+            story_count,
+            int,
+        )
+        or story_count != 25
+    ):
+        raise RuntimeError(
+            f"Email report contained "
+            f"{story_count} stories; expected 25."
+        )
+
+    logger.info(
+        "✓ EMAIL REPORT: %d stories sent",
+        story_count,
     )
 
 
@@ -781,6 +817,9 @@ VALIDATORS = {
     ),
     "scripts.event_memory": (
         validate_event_memory
+    ),
+    "scripts.email_report": (
+        validate_email_report
     ),
     "scripts.position_manager": (
         validate_position_manager
