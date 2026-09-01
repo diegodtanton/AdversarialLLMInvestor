@@ -123,7 +123,7 @@ CANDIDATE_ASSESSMENT_SCHEMA = {
             ],
         },
 
-        "four_week_fit": {
+        "six_month_fit": {
             "type": "string",
             "enum": [
                 "GOOD",
@@ -182,7 +182,7 @@ CANDIDATE_ASSESSMENT_SCHEMA = {
         "price_action_assessment",
         "valuation_assessment",
         "fundamental_assessment",
-        "four_week_fit",
+        "six_month_fit",
         "execution_risk",
         "confidence",
         "key_numbers",
@@ -292,13 +292,7 @@ TIME HORIZON
 The actual trading system will close a position when either:
 
 1. It achieves approximately +10% return, OR
-2. 28 calendar days have elapsed.
-
-Therefore you are evaluating a SHORT-DURATION implementation of
-Gilman's thesis.
-
-Gilman may identify a fundamentally correct six-to-twelve-month
-relationship that is still a poor trade over the next four weeks.
+2. 180 calendar days have elapsed.
 
 Reject those when there is no plausible mechanism for the thesis to
 begin affecting market expectations within the holding period.
@@ -311,11 +305,11 @@ The +10% level is an execution rule, not an expected-return hurdle.
 A trade can be attractive even if your base case is a smaller move,
 provided that:
 
-- expected return over the next four weeks is meaningfully favorable,
+- expected return over the next six months is meaningfully favorable,
 - downside and uncertainty are acceptable,
 - there is a credible path for the thesis to begin being recognized,
 - and there is a meaningful probability of reaching the +10% exit
-  before the 28-day time limit.
+  before the 180-day time limit.
 
 Evaluate the distribution of possible outcomes rather than asking only
 whether a specific catalyst will mechanically produce a 10% move.
@@ -328,14 +322,7 @@ downside risk.
 You need a plausible reason the thesis could begin affecting investor
 expectations, reported economics, guidance, contracts, regulation,
 orders, sentiment, positioning, or another material variable within
-roughly four weeks.
-
-Do not require the entire fundamental thesis to play out within four
-weeks.
-
-But there should be a credible near-term repricing mechanism. A thesis
-whose economic consequences are unlikely to become visible or
-important until many months later should normally be rejected.
+roughly six months.
 
 ============================================================
 WHAT TO EXAMINE
@@ -458,7 +445,7 @@ An approved candidate should satisfy most of these:
 3. Valuation does not make the proposed direction obviously
    unattractive.
 4. Fundamentals are compatible with the thesis.
-5. A meaningful repricing path exists within roughly four weeks.
+5. A meaningful repricing path exists within roughly six months.
 6. Execution/volatility risk is acceptable.
 7. The reward appears worth the uncertainty.
 8. The candidate is stronger than every other candidate supplied.

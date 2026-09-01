@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import os
@@ -60,6 +61,82 @@ MARKET_OPEN_STAGES = [
 
     "scripts.alpaca_execute",
 ]
+
+
+# ============================================================
+# CLI
+# ============================================================
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Run the daily news → Gilman → "
+            "Brody → Alpaca pipeline."
+        ),
+    )
+
+    parser.add_argument(
+        "--no_news",
+        action="store_true",
+        help=(
+            "Skip news collection, Event Memory, and the "
+            "email report. Reuse the existing "
+            "data/enriched_latest.json and run only the "
+            "market/trading portion of the pipeline."
+        ),
+    )
+
+    return parser.parse_args()
+
+
+def validate_no_news_input() -> None:
+    """
+    Ensure a previous enriched news dataset exists before running
+    Gilman without refreshing news/Event Memory.
+    """
+
+    path = (
+        DATA_DIR
+        / "enriched_latest.json"
+    )
+
+    data = load_json(
+        path
+    )
+
+    stories = data.get(
+        "stories",
+        [],
+    )
+
+    if not stories:
+        raise RuntimeError(
+            "Cannot run --no_news because "
+            "enriched_latest.json contains no stories."
+        )
+
+    missing_context = [
+        story.get(
+            "story_id",
+            story.get("rank"),
+        )
+        for story in stories
+        if not story.get(
+            "event_context"
+        )
+    ]
+
+    if missing_context:
+        raise RuntimeError(
+            "Cannot run --no_news because "
+            "enriched_latest.json contains stories "
+            "without Event Memory context."
+        )
+
+    logger.info(
+        "✓ Reusing existing enriched news: %d stories",
+        len(stories),
+    )
 
 # ------------------------------------------------------------
 # CONNECTIVITY / RETRY
@@ -870,14 +947,21 @@ def run_and_validate(
 # ============================================================
 
 def main():
+    args = parse_args()
+
     logger.info(
         "============================================================"
     )
 
-    logger.info(
-        "Starting daily news → Gilman → "
-        "Brody → Alpaca pipeline"
-    )
+    if args.no_news:
+        logger.info(
+            "Starting no_news pipeline"
+        )
+    else:
+        logger.info(
+            "Starting daily news → Gilman → "
+            "Brody → Alpaca pipeline"
+        )
 
     # Important for the "opened laptop at coffee shop" case.
     wait_for_internet()
@@ -885,17 +969,27 @@ def main():
     # --------------------------------------------------------
     # DAILY NEWS / EVENT MEMORY
     #
-    # Run these every calendar day, including weekends and
-    # exchange holidays.
+    # Normally these run every calendar day, including weekends
+    # and exchange holidays.
     #
-    # This keeps Event Memory continuous and prevents Monday's
-    # 26-hour news window from losing weekend developments.
+    # --no_news deliberately skips them and reuses the
+    # existing enriched_latest.json so Gilman/Brody can be
+    # tested without paying for another news/Event Memory run.
     # --------------------------------------------------------
 
-    for module in ALWAYS_RUN_STAGES:
-        run_and_validate(
-            module
+    if args.no_news:
+        logger.info(
+            "Skipping news collection, Event Memory, "
+            "and email report"
         )
+
+        validate_no_news_input()
+
+    else:
+        for module in ALWAYS_RUN_STAGES:
+            run_and_validate(
+                module
+            )
 
     # --------------------------------------------------------
     # MARKET GATE
@@ -903,8 +997,9 @@ def main():
     # Gilman, market context, Brody, and execution only run while
     # regular US equity trading is actually open.
     #
-    # Alpaca's clock handles weekends, exchange holidays, and
-    # early closes, so we do not maintain a separate calendar.
+    # This applies to --no_news as well. The flag changes
+    # where the pipeline starts; it does not bypass trading-hour
+    # safety.
     # --------------------------------------------------------
 
     wait_for_internet()
@@ -919,11 +1014,19 @@ def main():
             "MARKET CLOSED"
         )
 
-        logger.info(
-            "News collection and Event Memory completed. "
-            "Skipping Gilman → Market Context → "
-            "Brody → Alpaca."
-        )
+        if args.no_news:
+            logger.info(
+                "no_news mode requested, but the "
+                "regular US equity market is closed. "
+                "Skipping Gilman → Market Context → "
+                "Brody → Alpaca."
+            )
+        else:
+            logger.info(
+                "News collection and Event Memory completed. "
+                "Skipping Gilman → Market Context → "
+                "Brody → Alpaca."
+            )
 
         return
 
@@ -940,9 +1043,14 @@ def main():
         "============================================================"
     )
 
-    logger.info(
-        "DAILY PIPELINE SUCCESS"
-    )
+    if args.no_news:
+        logger.info(
+            "no_news PIPELINE SUCCESS"
+        )
+    else:
+        logger.info(
+            "DAILY PIPELINE SUCCESS"
+        )
 
 
 if __name__ == "__main__":
