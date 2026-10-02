@@ -1798,7 +1798,7 @@ CANDIDATE_ASSESSMENT_SCHEMA = {
             ],
         },
 
-        "four_week_fit": {
+        "six_month_fit": {
             "type": "string",
             "enum": [
                 "GOOD",
@@ -1857,7 +1857,7 @@ CANDIDATE_ASSESSMENT_SCHEMA = {
         "price_action_assessment",
         "valuation_assessment",
         "fundamental_assessment",
-        "four_week_fit",
+        "six_month_fit",
         "execution_risk",
         "confidence",
         "key_numbers",
@@ -1967,13 +1967,7 @@ TIME HORIZON
 The actual trading system will close a position when either:
 
 1. It achieves approximately +10% return, OR
-2. 28 calendar days have elapsed.
-
-Therefore you are evaluating a SHORT-DURATION implementation of
-Gilman's thesis.
-
-Gilman may identify a fundamentally correct six-to-twelve-month
-relationship that is still a poor trade over the next four weeks.
+2. 180 calendar days have elapsed.
 
 Reject those when there is no plausible mechanism for the thesis to
 begin affecting market expectations within the holding period.
@@ -1986,11 +1980,11 @@ The +10% level is an execution rule, not an expected-return hurdle.
 A trade can be attractive even if your base case is a smaller move,
 provided that:
 
-- expected return over the next four weeks is meaningfully favorable,
+- expected return over the next six months is meaningfully favorable,
 - downside and uncertainty are acceptable,
 - there is a credible path for the thesis to begin being recognized,
 - and there is a meaningful probability of reaching the +10% exit
-  before the 28-day time limit.
+  before the 180-day time limit.
 
 Evaluate the distribution of possible outcomes rather than asking only
 whether a specific catalyst will mechanically produce a 10% move.
@@ -2003,14 +1997,7 @@ downside risk.
 You need a plausible reason the thesis could begin affecting investor
 expectations, reported economics, guidance, contracts, regulation,
 orders, sentiment, positioning, or another material variable within
-roughly four weeks.
-
-Do not require the entire fundamental thesis to play out within four
-weeks.
-
-But there should be a credible near-term repricing mechanism. A thesis
-whose economic consequences are unlikely to become visible or
-important until many months later should normally be rejected.
+roughly six months.
 
 ============================================================
 WHAT TO EXAMINE
@@ -2133,7 +2120,7 @@ An approved candidate should satisfy most of these:
 3. Valuation does not make the proposed direction obviously
    unattractive.
 4. Fundamentals are compatible with the thesis.
-5. A meaningful repricing path exists within roughly four weeks.
+5. A meaningful repricing path exists within roughly six months.
 6. Execution/volatility risk is acceptable.
 7. The reward appears worth the uncertainty.
 8. The candidate is stronger than every other candidate supplied.
@@ -2549,6 +2536,7 @@ FILE: scripts/daily_pipeline.py
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import os
@@ -2609,6 +2597,82 @@ MARKET_OPEN_STAGES = [
 
     "scripts.alpaca_execute",
 ]
+
+
+# ============================================================
+# CLI
+# ============================================================
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Run the daily news → Gilman → "
+            "Brody → Alpaca pipeline."
+        ),
+    )
+
+    parser.add_argument(
+        "--no_news",
+        action="store_true",
+        help=(
+            "Skip news collection, Event Memory, and the "
+            "email report. Reuse the existing "
+            "data/enriched_latest.json and run only the "
+            "market/trading portion of the pipeline."
+        ),
+    )
+
+    return parser.parse_args()
+
+
+def validate_no_news_input() -> None:
+    """
+    Ensure a previous enriched news dataset exists before running
+    Gilman without refreshing news/Event Memory.
+    """
+
+    path = (
+        DATA_DIR
+        / "enriched_latest.json"
+    )
+
+    data = load_json(
+        path
+    )
+
+    stories = data.get(
+        "stories",
+        [],
+    )
+
+    if not stories:
+        raise RuntimeError(
+            "Cannot run --no_news because "
+            "enriched_latest.json contains no stories."
+        )
+
+    missing_context = [
+        story.get(
+            "story_id",
+            story.get("rank"),
+        )
+        for story in stories
+        if not story.get(
+            "event_context"
+        )
+    ]
+
+    if missing_context:
+        raise RuntimeError(
+            "Cannot run --no_news because "
+            "enriched_latest.json contains stories "
+            "without Event Memory context."
+        )
+
+    logger.info(
+        "✓ Reusing existing enriched news: %d stories",
+        len(stories),
+    )
 
 # ------------------------------------------------------------
 # CONNECTIVITY / RETRY
@@ -3419,14 +3483,21 @@ def run_and_validate(
 # ============================================================
 
 def main():
+    args = parse_args()
+
     logger.info(
         "============================================================"
     )
 
-    logger.info(
-        "Starting daily news → Gilman → "
-        "Brody → Alpaca pipeline"
-    )
+    if args.no_news:
+        logger.info(
+            "Starting no_news pipeline"
+        )
+    else:
+        logger.info(
+            "Starting daily news → Gilman → "
+            "Brody → Alpaca pipeline"
+        )
 
     # Important for the "opened laptop at coffee shop" case.
     wait_for_internet()
@@ -3434,17 +3505,27 @@ def main():
     # --------------------------------------------------------
     # DAILY NEWS / EVENT MEMORY
     #
-    # Run these every calendar day, including weekends and
-    # exchange holidays.
+    # Normally these run every calendar day, including weekends
+    # and exchange holidays.
     #
-    # This keeps Event Memory continuous and prevents Monday's
-    # 26-hour news window from losing weekend developments.
+    # --no_news deliberately skips them and reuses the
+    # existing enriched_latest.json so Gilman/Brody can be
+    # tested without paying for another news/Event Memory run.
     # --------------------------------------------------------
 
-    for module in ALWAYS_RUN_STAGES:
-        run_and_validate(
-            module
+    if args.no_news:
+        logger.info(
+            "Skipping news collection, Event Memory, "
+            "and email report"
         )
+
+        validate_no_news_input()
+
+    else:
+        for module in ALWAYS_RUN_STAGES:
+            run_and_validate(
+                module
+            )
 
     # --------------------------------------------------------
     # MARKET GATE
@@ -3452,8 +3533,9 @@ def main():
     # Gilman, market context, Brody, and execution only run while
     # regular US equity trading is actually open.
     #
-    # Alpaca's clock handles weekends, exchange holidays, and
-    # early closes, so we do not maintain a separate calendar.
+    # This applies to --no_news as well. The flag changes
+    # where the pipeline starts; it does not bypass trading-hour
+    # safety.
     # --------------------------------------------------------
 
     wait_for_internet()
@@ -3468,11 +3550,19 @@ def main():
             "MARKET CLOSED"
         )
 
-        logger.info(
-            "News collection and Event Memory completed. "
-            "Skipping Gilman → Market Context → "
-            "Brody → Alpaca."
-        )
+        if args.no_news:
+            logger.info(
+                "no_news mode requested, but the "
+                "regular US equity market is closed. "
+                "Skipping Gilman → Market Context → "
+                "Brody → Alpaca."
+            )
+        else:
+            logger.info(
+                "News collection and Event Memory completed. "
+                "Skipping Gilman → Market Context → "
+                "Brody → Alpaca."
+            )
 
         return
 
@@ -3489,9 +3579,14 @@ def main():
         "============================================================"
     )
 
-    logger.info(
-        "DAILY PIPELINE SUCCESS"
-    )
+    if args.no_news:
+        logger.info(
+            "no_news PIPELINE SUCCESS"
+        )
+    else:
+        logger.info(
+            "DAILY PIPELINE SUCCESS"
+        )
 
 
 if __name__ == "__main__":
