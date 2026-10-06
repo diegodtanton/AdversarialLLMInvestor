@@ -51,7 +51,7 @@ EVENT_REASONING = os.getenv(
     "medium",
 )
 
-EMBEDDING_MODEL = "text-embedding-3-small"
+EMBEDDING_MODEL = "text-embedding-3-large"
 
 # Using shortened embeddings keeps the persistent database and
 # in-memory event index small.
