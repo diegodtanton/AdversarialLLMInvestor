@@ -38,7 +38,8 @@ News/
 ├── utils/
 │   ├── concat.py
 │   ├── git.py
-│   └── launchd.py
+│   ├── launchd.py
+│   └── patch.py
 ├── .env
 ├── concat.txt
 ├── databases.md
