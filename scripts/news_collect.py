@@ -1633,9 +1633,11 @@ def write_outputs(
             ),
         }
 
-        stories.append(
-            public_story
-        )
+        public_story["sources"] = [
+            {key: article.get(key) for key in ("title", "source", "url", "published_at")}
+            for article in cluster["articles"][:12]
+        ]
+        stories.append(public_story)
 
         debug_stories.append(
             {

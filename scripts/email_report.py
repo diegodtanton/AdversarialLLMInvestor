@@ -5,6 +5,9 @@ import json
 import logging
 import os
 import smtplib
+import hashlib
+from . import trade_store
+from .trade_report import summary as trading_summary
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
@@ -81,16 +84,6 @@ EMAIL_REPORT_LIMIT = int(
 # ------------------------------------------------------------
 # OPENAI
 # ------------------------------------------------------------
-
-OPENAI_API_KEY = os.environ[
-    "OPENAI_API_KEY"
-]
-
-openai_client = OpenAI(
-    api_key=OPENAI_API_KEY,
-    max_retries=3,
-    timeout=180.0,
-)
 
 TRENDS_MODEL = os.getenv(
     "TRENDS_MODEL",
@@ -228,6 +221,7 @@ def generate_trends_digest(
         TRENDS_MODEL,
     )
 
+    openai_client = OpenAI(max_retries=2, timeout=120.0)
     response = (
         openai_client.responses.create(
             model=TRENDS_MODEL,
@@ -331,7 +325,10 @@ def build_plain_text(
     )
 
     lines = [
+        news_payload.get("trade_summary", "Trade status unconfirmed."),
+        "",
         f"DAILY BRIEF — {date_str}",
+        news_payload.get("news_notice", ""),
         "",
         "NEWS",
         "====",
@@ -494,6 +491,8 @@ def build_html(
                 </div>
 
 
+                <div style="padding:18px;background:#eff6ff;margin-bottom:24px;white-space:pre-wrap;">{html.escape(news_payload.get('trade_summary', 'Trade status unconfirmed.'))}</div>
+                <p>{html.escape(news_payload.get('news_notice', ''))}</p>
                 <!-- NEWS -->
 
                 <div style="
@@ -593,15 +592,8 @@ def send_report(
         :EMAIL_REPORT_LIMIT
     ]
 
-    if not stories:
-        raise RuntimeError(
-            "No stories available for email report."
-        )
 
-    subject = (
-        f"Daily Brief — News & Trends — "
-        f"{date_str}"
-    )
+    subject = f"Daily Brief — {date_str} — {news_payload['trade_summary'].splitlines()[0]}"
 
     message = EmailMessage()
 
@@ -639,20 +631,23 @@ def send_report(
         EMAIL_TO,
     )
 
-    with smtplib.SMTP_SSL(
-        "smtp.gmail.com",
-        465,
-        timeout=30,
-    ) as smtp:
-
-        smtp.login(
-            GMAIL_ADDRESS,
-            GMAIL_APP_PASSWORD,
-        )
-
-        smtp.send_message(
-            message
-        )
+    report_key = news_payload['report_key']
+    message['Message-ID'] = '<' + hashlib.sha256(report_key.encode()).hexdigest() + '@news-paper-report>'
+    outbox = DATA_DIR / 'reports'
+    outbox.mkdir(exist_ok=True)
+    (outbox / (hashlib.sha256(report_key.encode()).hexdigest() + '.eml')).write_bytes(message.as_bytes())
+    if not trade_store.claim_report(report_key):
+        raise RuntimeError('This report was sent or has an ambiguous prior send; inspect reports before retrying')
+    send_started = False
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com',465,timeout=30) as smtp:
+            smtp.login(GMAIL_ADDRESS,GMAIL_APP_PASSWORD)
+            send_started = True
+            smtp.send_message(message)
+        trade_store.report_status(report_key,'SENT')
+    except Exception as exc:
+        trade_store.report_status(report_key,'UNKNOWN' if send_started else 'FAILED',str(exc))
+        raise
 
     logger.info(
         "Email sent successfully"
@@ -675,6 +670,8 @@ def write_output(
 ) -> None:
 
     result = {
+        "run_id": os.getenv("NEWS_RUN_ID"),
+        "trade_summary": news_payload.get("trade_summary"),
         "date": report_date(
             news_payload
         ),
@@ -715,40 +712,38 @@ def write_output(
 # ============================================================
 
 def main():
-
-    logger.info(
-        "Starting daily email report"
-    )
-
-    news_payload = load_json(
-        NEWS_INPUT_PATH
-    )
-
-    trends_payload = load_json(
-        TRENDS_INPUT_PATH
-    )
-
-    trends_digest = (
-        generate_trends_digest(
-            trends_payload
-        )
-    )
-
-    story_count = send_report(
-        news_payload,
-        trends_digest,
-    )
-
-    write_output(
-        news_payload,
-        trends_payload,
-        trends_digest,
-        story_count,
-    )
-
-    logger.info(
-        "Daily email report complete"
-    )
+    now = datetime.now(timezone.utc)
+    run_id = os.getenv('NEWS_RUN_ID')
+    with trade_store.connect() as db:
+        summary = trading_summary(db, run_id, now, str(REPORT_TIMEZONE))
+    try:
+        news = load_json(NEWS_INPUT_PATH)
+        original_generated = news.get('generated_at')
+        source_dt = datetime.fromisoformat(original_generated.replace('Z','+00:00'))
+        if source_dt.tzinfo is None or not -60 <= (now-source_dt).total_seconds() <= 36*3600:
+            raise ValueError('News source is stale')
+        news['news_notice'] = 'News source generated at ' + original_generated
+    except Exception as exc:
+        news = {'date':now.date().isoformat(),'stories':[], 'news_notice':'News unavailable: '+str(exc)}
+    # Report date is delivery date, not a reused news file's date.
+    news['generated_at'] = now.isoformat()
+    news['trade_summary'] = summary
+    news['report_key'] = run_id or ('standalone-' + now.astimezone(REPORT_TIMEZONE).date().isoformat())
+    trends = {}
+    try:
+        trends = load_json(TRENDS_INPUT_PATH)
+        source = datetime.fromisoformat(trends['generated_at_utc'].replace('Z','+00:00'))
+        if source.tzinfo is None or not -60 <= (now-source).total_seconds() <= 36*3600:
+            raise ValueError('Trends source is stale')
+        digest = generate_trends_digest(trends)
+    except Exception as exc:
+        logger.warning('Trends unavailable: %s',exc)
+        digest = 'Trends unavailable for this report.'
+    # Persist the factual summary before any SMTP side effect.
+    trade_store.atomic_json(DATA_DIR / 'trade_summary_latest.json',
+                            {'generated_at':now.isoformat(),'run_id':run_id,'summary':summary})
+    count = send_report(news,digest)
+    write_output(news,trends,digest,count)
 
 
 if __name__ == "__main__":

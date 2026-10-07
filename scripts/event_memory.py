@@ -43,7 +43,7 @@ client = OpenAI(
 
 EVENT_MODEL = os.getenv(
     "EVENT_MODEL",
-    "gpt-5.6-terra",
+    "gpt-6-sol",
 )
 
 EVENT_REASONING = os.getenv(
@@ -1325,7 +1325,7 @@ def apply_decision(
             SET
                 canonical_title = ?,
                 summary = ?,
-                last_seen = ?,
+                last_seen = MAX(last_seen, ?),
                 updated_at = ?
             WHERE event_id = ?
             """,
