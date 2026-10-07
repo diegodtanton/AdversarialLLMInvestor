@@ -205,6 +205,7 @@ Model IDs and reasoning settings are read from module defaults or environment ov
 | `GILMAN_MODEL`, `GILMAN_REASONING` | Proposer model and reasoning effort |
 | `BRODY_MODEL`, `BRODY_REASONING` | Critic model and reasoning effort |
 | `TRENDS_MODEL`, `TRENDS_REASONING` | Email trends-digest model and reasoning effort |
+| `TRADING_NARRATIVE_MODEL`, `TRADING_NARRATIVE_REASONING` | Email trading narrative (Gilman/Brody/execution summary); defaults to the trends model settings |
 | `MAX_EVENT_LINK_ATTEMPTS` | Attempts to repair event-linking output that fails semantic validation |
 | `TRADE_NOTIONAL_USD` | Target notional used for whole-share entry sizing |
 | `ENTRY_CUSHION_BPS`, `MAX_SPREAD_BPS` | Entry-price cushion and allowed quote spread |

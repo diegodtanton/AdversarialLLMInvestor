@@ -7,7 +7,7 @@ import os
 import smtplib
 import hashlib
 from . import trade_store
-from .trade_report import summary as trading_summary
+from .trade_narrative import compose_trading_section
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
@@ -491,7 +491,25 @@ def build_html(
                 </div>
 
 
-                <div style="padding:18px;background:#eff6ff;margin-bottom:24px;white-space:pre-wrap;">{html.escape(news_payload.get('trade_summary', 'Trade status unconfirmed.'))}</div>
+                <div style="
+                    font-size: 13px;
+                    font-weight: 700;
+                    letter-spacing: 1.5px;
+                    color: #6b7280;
+                    margin-bottom: 8px;
+                ">
+                    TRADING
+                </div>
+
+                <h2 style="
+                    margin: 0 0 16px 0;
+                    font-size: 24px;
+                    color: #111827;
+                ">
+                    Research &amp; execution
+                </h2>
+
+                <div style="padding:18px;background:#eff6ff;margin-bottom:24px;white-space:pre-wrap;line-height:1.65;font-size:15px;color:#1f2937;">{html.escape(news_payload.get('trade_summary', 'Trade status unconfirmed.'))}</div>
                 <p>{html.escape(news_payload.get('news_notice', ''))}</p>
                 <!-- NEWS -->
 
@@ -715,7 +733,9 @@ def main():
     now = datetime.now(timezone.utc)
     run_id = os.getenv('NEWS_RUN_ID')
     with trade_store.connect() as db:
-        summary = trading_summary(db, run_id, now, str(REPORT_TIMEZONE))
+        summary, trading_meta = compose_trading_section(
+            db, run_id, now, str(REPORT_TIMEZONE)
+        )
     try:
         news = load_json(NEWS_INPUT_PATH)
         original_generated = news.get('generated_at')
@@ -740,8 +760,15 @@ def main():
         logger.warning('Trends unavailable: %s',exc)
         digest = 'Trends unavailable for this report.'
     # Persist the factual summary before any SMTP side effect.
-    trade_store.atomic_json(DATA_DIR / 'trade_summary_latest.json',
-                            {'generated_at':now.isoformat(),'run_id':run_id,'summary':summary})
+    trade_store.atomic_json(
+        DATA_DIR / 'trade_summary_latest.json',
+        {
+            'generated_at': now.isoformat(),
+            'run_id': run_id,
+            'summary': summary,
+            **trading_meta,
+        },
+    )
     count = send_report(news,digest)
     write_output(news,trends,digest,count)
 

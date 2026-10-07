@@ -7,7 +7,8 @@ from . import trade_store as store
 from .trade_engine import dt
 
 
-def summary(db, run_id=None, now=None, zone='America/Chicago'):
+def operational_summary(db, run_id=None, now=None, zone='America/Chicago'):
+    """Broker fills and open executions only (no research narrative)."""
     now = now or datetime.now(timezone.utc)
     tz = ZoneInfo(zone)
     start = now.astimezone(tz).replace(hour=0,minute=0,second=0,microsecond=0).astimezone(timezone.utc)
@@ -41,6 +42,11 @@ def summary(db, run_id=None, now=None, zone='America/Chicago'):
     pending = db.execute("SELECT ticker,status,last_error FROM executions WHERE status NOT IN ('CLOSED','NO_FILL') ORDER BY created_at").fetchall()
     for p in pending:
         lines.append(f"{p['ticker']}: {p['status']}" + (f" — needs attention: {p['last_error']}" if p['last_error'] else ''))
+    return '\n'.join(lines)
+
+
+def summary(db, run_id=None, now=None, zone='America/Chicago'):
+    lines = [operational_summary(db, run_id, now, zone)]
     if run_id:
         run = db.execute('SELECT status,details_json FROM runs WHERE run_id=?',(run_id,)).fetchone()
         if run:

@@ -358,4 +358,37 @@ class BoundaryTests(unittest.TestCase):
         self.assertEqual(handoff['run_id'],'run');self.assertEqual(handoff['trades'][0]['event_id'],'event')
         self.assertEqual(handoff['trades'][0]['event_date'],'2026-10-02');self.assertEqual(len(recorded),1)
 
+
+class NarrativeTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.NamedTemporaryFile(delete=False)
+        self.db=store.connect(Path(self.tmp.name))
+        self.run_id='run-narrative'
+        with self.db:
+            self.db.execute('INSERT INTO runs(run_id,started_at,status,details_json) VALUES (?,?,?,?)',
+                            (self.run_id,NOW.isoformat(),'COMPLETE',store.dumps({'outcome':'COMPLETE','errors':[]})))
+            self.db.execute('INSERT INTO stage_runs(run_id,stage,started_at,status) VALUES (?,?,?,?)',
+                            (self.run_id,'position_manager',NOW.isoformat(),'SUCCEEDED'))
+            brody={'decision':'NO_TRADE','portfolio_reason':'All candidates rejected.','candidate_assessments':[
+                {'ticker':'ABC','direction':'FOR','verdict':'REJECT','reason':'Spread too wide.'}]}
+            self.db.execute('INSERT INTO decisions(run_id,source,generated_at,decision,payload_json) VALUES (?,?,?,?,?)',
+                            (self.run_id,'brody',NOW.isoformat(),'NO_TRADE',json.dumps(brody)))
+            gilman={'analyses':[{'story_id':'s','decision':'TRADE','trade':{'ticker':'ABC','direction':'FOR','thesis':'Test thesis.'}}]}
+            self.db.execute('INSERT INTO decisions(run_id,source,generated_at,decision,payload_json) VALUES (?,?,?,?,?)',
+                            (self.run_id,'gilman',NOW.isoformat(),None,json.dumps(gilman)))
+            self.db.commit()
+    def tearDown(self):
+        self.db.close();Path(self.tmp.name).unlink(missing_ok=True)
+    def test_fallback_narrative_mentions_gilman_and_brody(self):
+        from scripts.trade_narrative import build_research_payload,fallback_trading_narrative
+        research=build_research_payload(self.db,self.run_id)
+        text=fallback_trading_narrative(research,'No trades executed today.')
+        self.assertIn('ABC',text);self.assertIn('All candidates rejected',text)
+    def test_compose_uses_fallback_without_api_key(self):
+        from scripts.trade_narrative import compose_trading_section
+        with patch.dict(os.environ,{},clear=False):
+            os.environ.pop('OPENAI_API_KEY',None)
+            text,meta=compose_trading_section(self.db,self.run_id,now=NOW)
+        self.assertTrue(meta['fallback']);self.assertIn('Brody decision',text)
+
 if __name__=='__main__':unittest.main()
