@@ -12,7 +12,7 @@ SQLite databases are just files. You can inspect them directly with SQL using th
 From the repo root:
 
 ```bash
-cd /Users/diegotanton/Desktop/News
+cd /Users/diegotanton/Desktop/Developer/News
 
 sqlite3 data/news.db
 ```
@@ -267,7 +267,7 @@ Python includes SQLite support automatically:
 import sqlite3
 from pathlib import Path
 
-ROOT = Path("/Users/diegotanton/Desktop/News")
+ROOT = Path("/Users/diegotanton/Desktop/Developer/News")
 DB_PATH = ROOT / "data" / "trading.db"
 
 conn = sqlite3.connect(DB_PATH)
