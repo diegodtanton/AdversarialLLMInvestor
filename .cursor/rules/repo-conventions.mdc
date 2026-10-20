@@ -1,0 +1,27 @@
+---
+description: Repo layout, simplicity, secrets, and LLM defaults for this user
+alwaysApply: true
+---
+
+# Repo conventions
+
+## Simplicity
+
+Keep repos **simple and easy to navigate**. Minimize file bloat. Do not add audits, traceability scaffolding, or extra layers unless the user asks.
+
+Prefer **compact scripts**: if something fits in ~500 lines, do not inflate it to 1500 for readability. Minimize explanatory comments and excessive blank lines in scripts.
+
+## Secrets and config
+
+Use a **`.env`** file (gitignored) for API keys and tunable parameters (e.g. model names). Do not commit secrets.
+
+## LLMs
+
+Default to **OpenAI** models unless the user chooses otherwise. Prefer current OpenAI APIs / model classes when wiring LLM clients.
+
+## Standard layout (this user)
+
+- **`environment.yml`** — conda env (env name in `name:` field)
+- **`requirements.txt`** — pip deps (often referenced from `environment.yml`)
+- **`scripts/`** — all project Python; entry points as **`python -m scripts.<name>`**
+- **Mac** — paths and shell examples assume macOS

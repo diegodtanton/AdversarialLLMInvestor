@@ -1,0 +1,26 @@
+---
+description: Use the repo conda env (from environment.yml) when running Python in shells
+alwaysApply: true
+---
+
+# Python in this repo
+
+Agent and shell commands do not load interactive zsh/conda by default. Do not assume bare `python` exists on PATH.
+
+This repo has no `environment.yml`. Use the env documented in the README or ask the user before assuming a conda env name.
+
+The user activates it with:
+
+```bash
+source utils/venv
+```
+
+For agent-driven commands, use that env explicitly:
+
+If you add `environment.yml`, read the `name:` field and use:
+
+```bash
+conda run -n <name> python -m scripts.<module> …
+```
+
+Run scripts as packages: `python -m scripts.<module>` (from repo root, with the env above).
