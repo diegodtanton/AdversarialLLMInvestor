@@ -17878,3 +17878,27 @@ Traceback (most recent call last):
     db = sqlite3.connect(path, timeout=30)
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: disk I/O error
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/daily_pipeline.py", line 103, in <module>
+    main()
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/daily_pipeline.py", line 45, in main
+    with store.process_lock('pipeline'), store.connect() as db:
+                                         ^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/trade_store.py", line 62, in connect
+    db = sqlite3.connect(path, timeout=30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: disk I/O error
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/daily_pipeline.py", line 103, in <module>
+    main()
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/daily_pipeline.py", line 45, in main
+    with store.process_lock('pipeline'), store.connect() as db:
+                                         ^^^^^^^^^^^^^^^
+  File "/Users/diegotanton/Desktop/Developer/AdversarialLLMInvestor/scripts/trade_store.py", line 62, in connect
+    db = sqlite3.connect(path, timeout=30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: disk I/O error
