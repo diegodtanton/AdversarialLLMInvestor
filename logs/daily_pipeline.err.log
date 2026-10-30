@@ -19716,3 +19716,79 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-10-30 08:31:48,247 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/latest.json
 2026-10-30 08:31:48,247 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/2026-10-30.debug.json
 2026-10-30 08:31:48,247 | INFO | Daily RSS news update complete
+2026-10-30 08:31:49,808 | INFO | 2026-10-30: 100 unprocessed stories
+2026-10-30 08:31:49,808 | INFO | Event Memory: stories 1-10 of 100 for 2026-10-30
+2026-10-30 08:31:51,181 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:06,145 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:32:06,848 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:06,873 | INFO | Event Memory: stories 11-20 of 100 for 2026-10-30
+2026-10-30 08:32:07,365 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:22,889 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:32:23,301 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:23,306 | INFO | Event Memory: stories 21-30 of 100 for 2026-10-30
+2026-10-30 08:32:23,548 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:39,437 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:32:39,863 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:39,868 | INFO | Event Memory: stories 31-40 of 100 for 2026-10-30
+2026-10-30 08:32:40,187 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:52,488 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:32:52,707 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:32:52,723 | INFO | Event Memory: stories 41-50 of 100 for 2026-10-30
+2026-10-30 08:32:53,105 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:07,950 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:33:08,296 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:08,301 | INFO | Event Memory: stories 51-60 of 100 for 2026-10-30
+2026-10-30 08:33:08,549 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:22,300 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:33:22,597 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:22,602 | INFO | Event Memory: stories 61-70 of 100 for 2026-10-30
+2026-10-30 08:33:22,904 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:35,086 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:33:35,497 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:35,500 | INFO | Event Memory: stories 71-80 of 100 for 2026-10-30
+2026-10-30 08:33:35,813 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:49,157 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:33:49,835 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:33:49,840 | INFO | Event Memory: stories 81-90 of 100 for 2026-10-30
+2026-10-30 08:33:50,064 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:34:02,838 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:34:03,058 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:34:03,061 | INFO | Event Memory: stories 91-100 of 100 for 2026-10-30
+2026-10-30 08:34:03,288 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:34:17,316 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:34:17,689 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-10-30 08:34:17,720 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/2026-10-30.enriched.json
+2026-10-30 08:34:17,721 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/enriched_latest.json
+2026-10-30 08:34:17,736 | INFO | Event Memory complete
+2026-10-30 08:34:19,240 | INFO | Gilman analyzing stories 1-10 of 100
+2026-10-30 08:36:02,420 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:36:02,661 | INFO | Gilman analyzing stories 11-20 of 100
+2026-10-30 08:39:03,624 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:39:03,731 | INFO | Gilman analyzing stories 21-30 of 100
+2026-10-30 08:40:32,885 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:40:32,893 | INFO | Gilman analyzing stories 31-40 of 100
+2026-10-30 08:41:39,959 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:41:39,969 | INFO | Gilman analyzing stories 41-50 of 100
+2026-10-30 08:42:33,211 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:42:33,217 | INFO | Gilman analyzing stories 51-60 of 100
+2026-10-30 08:45:09,883 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:45:09,937 | INFO | Gilman analyzing stories 61-70 of 100
+2026-10-30 08:45:42,549 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:45:42,553 | INFO | Gilman analyzing stories 71-80 of 100
+2026-10-30 08:46:50,470 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:46:50,473 | INFO | Gilman analyzing stories 81-90 of 100
+2026-10-30 08:47:36,705 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:47:36,735 | INFO | Gilman analyzing stories 91-100 of 100
+2026-10-30 08:48:11,289 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:48:11,320 | INFO | Gilman produced 2 candidates
+2026-10-30 08:48:13,005 | INFO | Starting Brody
+2026-10-30 08:48:13,005 | INFO | Evaluating 2 Gilman candidates
+2026-10-30 08:48:16,776 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:48:46,995 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:48:47,013 | INFO | Brody decision: NO_TRADE
+2026-10-30 08:48:47,013 | INFO | Brody complete
+2026-10-30 08:48:49,462 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-10-30 08:48:54,778 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-10-30 08:48:54,986 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-10-30 08:48:55,003 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-10-30 08:48:56,489 | INFO | Email sent successfully
