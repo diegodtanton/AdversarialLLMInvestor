@@ -21601,3 +21601,28 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-04 08:59:52,050 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
 2026-11-04 08:59:52,058 | INFO | Gilman analyzing stories 21-30 of 100
 2026-11-04 10:35:32,456 | INFO | Retrying request in 0.402201 seconds
+2026-11-04 10:36:30,839 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:36:30,937 | INFO | Gilman analyzing stories 31-40 of 100
+2026-11-04 10:37:56,256 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:37:56,311 | INFO | Gilman analyzing stories 41-50 of 100
+2026-11-04 10:39:25,967 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:39:25,979 | INFO | Gilman analyzing stories 51-60 of 100
+2026-11-04 10:40:40,611 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:40:40,624 | INFO | Gilman analyzing stories 61-70 of 100
+2026-11-04 10:42:41,512 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:42:41,524 | INFO | Gilman analyzing stories 71-80 of 100
+2026-11-04 10:43:45,517 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:43:45,532 | INFO | Gilman analyzing stories 81-90 of 100
+2026-11-04 10:44:44,293 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:44:44,299 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-04 10:45:35,313 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:45:35,405 | INFO | Gilman produced 0 candidates
+2026-11-04 10:45:37,721 | INFO | Starting Brody
+2026-11-04 10:45:37,722 | INFO | Evaluating 0 Gilman candidates
+2026-11-04 10:45:37,731 | INFO | Brody decision: NO_TRADE
+2026-11-04 10:45:37,731 | INFO | Brody complete
+2026-11-04 10:45:39,898 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-04 10:45:43,787 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-04 10:45:44,009 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-04 10:45:44,021 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-04 10:45:45,869 | INFO | Email sent successfully
