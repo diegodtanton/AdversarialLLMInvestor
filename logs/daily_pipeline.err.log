@@ -22490,3 +22490,18 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-06 08:45:30,095 | INFO | Gilman analyzing stories 71-80 of 100
 2026-11-06 08:46:43,261 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
 2026-11-06 08:46:43,271 | INFO | Gilman analyzing stories 81-90 of 100
+2026-11-06 08:47:54,349 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-06 08:47:54,380 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-06 08:48:53,402 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-06 08:48:53,454 | INFO | Gilman produced 1 candidates
+2026-11-06 08:48:55,443 | INFO | Starting Brody
+2026-11-06 08:48:55,444 | INFO | Evaluating 1 Gilman candidates
+2026-11-06 08:48:59,158 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-06 08:49:28,609 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-06 08:49:28,671 | INFO | Brody decision: NO_TRADE
+2026-11-06 08:49:28,671 | INFO | Brody complete
+2026-11-06 08:49:31,654 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-06 08:49:36,770 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-06 08:49:37,008 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-06 08:49:37,033 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-06 08:49:38,511 | INFO | Email sent successfully
