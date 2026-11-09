@@ -23513,3 +23513,33 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-09 08:46:47,244 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/enriched_latest.json
 2026-11-09 08:46:47,310 | INFO | Event Memory complete
 2026-11-09 08:46:57,415 | INFO | Gilman analyzing stories 1-10 of 100
+2026-11-09 09:40:49,056 | INFO | Retrying request in 0.413067 seconds
+2026-11-09 09:42:43,415 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:42:43,686 | INFO | Gilman analyzing stories 11-20 of 100
+2026-11-09 09:44:26,490 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:44:26,570 | INFO | Gilman analyzing stories 21-30 of 100
+2026-11-09 09:46:24,480 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:46:24,569 | INFO | Gilman analyzing stories 31-40 of 100
+2026-11-09 09:48:46,167 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:48:46,221 | INFO | Gilman analyzing stories 41-50 of 100
+2026-11-09 09:49:47,134 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:49:47,152 | INFO | Gilman analyzing stories 51-60 of 100
+2026-11-09 09:51:44,435 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:51:44,451 | INFO | Gilman analyzing stories 61-70 of 100
+2026-11-09 09:52:41,572 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:52:41,577 | INFO | Gilman analyzing stories 71-80 of 100
+2026-11-09 09:53:44,265 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:53:44,304 | INFO | Gilman analyzing stories 81-90 of 100
+2026-11-09 09:54:53,883 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:54:53,904 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-09 09:56:24,117 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:56:24,229 | INFO | Gilman produced 0 candidates
+2026-11-09 09:56:26,421 | INFO | Starting Brody
+2026-11-09 09:56:26,421 | INFO | Evaluating 0 Gilman candidates
+2026-11-09 09:56:26,427 | INFO | Brody decision: NO_TRADE
+2026-11-09 09:56:26,427 | INFO | Brody complete
+2026-11-09 09:56:28,801 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-09 09:56:33,133 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-09 09:56:33,345 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-09 09:56:33,361 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-09 09:56:35,546 | INFO | Email sent successfully
