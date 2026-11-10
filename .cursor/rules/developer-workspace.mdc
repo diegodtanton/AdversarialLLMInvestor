@@ -1,0 +1,12 @@
+---
+description: Also follow the master rules in the parent Developer/ folder
+alwaysApply: true
+---
+
+# Master rules in Developer/
+
+This repo is one of several sibling repos in `~/Developer/`. That folder has master Cursor rules that apply to every repo: how to route work between repos, where shared context lives (including AstraWorker's memory), and conventions for writing it.
+
+Cursor only loads them automatically when `Developer/` itself is the open workspace. When this repo is opened on its own, read every `.mdc` file in `/Users/diegotanton/Developer/.cursor/rules/` (currently `workspace.mdc`) before starting work, and follow them.
+
+On AstraWorker's VM the folder is `/workspace/Developer/`; if the master rules are not there, skip this step. Where a master rule conflicts with a rule in this repo, this repo's rule wins.
