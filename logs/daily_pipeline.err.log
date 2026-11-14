@@ -25253,3 +25253,94 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-14 09:16:33,480 | INFO | 551 unique recent publisher articles remain after filtering/deduplication
 2026-11-14 09:16:33,480 | INFO | Skipped 596 old entries and 0 undated entries
 2026-11-14 09:16:33,481 | INFO | Embedding articles 1-200 of 551
+2026-11-14 09:16:36,694 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:16:37,021 | INFO | Embedding articles 201-400 of 551
+2026-11-14 09:16:37,384 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:16:37,676 | INFO | Embedding articles 401-551 of 551
+2026-11-14 09:16:38,198 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:16:38,503 | INFO | Clustering 551 articles
+2026-11-14 09:16:38,888 | INFO | 498 distinct story clusters found
+2026-11-14 09:16:38,888 | INFO | Top 20 clusters before GPT summarization:
+2026-11-14 09:16:38,888 | INFO | #1 | score=18.27 | sources=4 | articles=5 | Nvidia scandal: US treasury chief blames Lutnick’s commerce department over alleged lack of action
+2026-11-14 09:16:38,888 | INFO | #2 | score=17.26 | sources=4 | articles=4 | US floats Nato membership for Donbas withdrawal deal, Zelenskyy says
+2026-11-14 09:16:38,888 | INFO | #3 | score=16.71 | sources=4 | articles=5 | Hungary seizes $19.5m in cash found buried in forests amid graft inquiry
+2026-11-14 09:16:38,888 | INFO | #4 | score=16.13 | sources=3 | articles=3 | Bomb found at Illinois ethanol plant, prompting evacuations
+2026-11-14 09:16:38,888 | INFO | #5 | score=14.69 | sources=3 | articles=3 | Eisenkot condemns Netanyahu’s ‘racist’ campaign against Israel’s Arab citizens
+2026-11-14 09:16:38,888 | INFO | #6 | score=14.00 | sources=2 | articles=3 | Nvidia and Jensen Huang fallout: Here’s everything we know after a momentous week
+2026-11-14 09:16:38,888 | INFO | #7 | score=13.75 | sources=3 | articles=3 | Trump-backed Maga firebrand Lauren Boebert defeated in Colorado congressional race
+2026-11-14 09:16:38,888 | INFO | #8 | score=13.63 | sources=2 | articles=2 | Noel Fielding Says He Regrets 'Horrible' Jokes He Made With Russell Brand After Old Clip Resurfaces
+2026-11-14 09:16:38,888 | INFO | #9 | score=13.61 | sources=2 | articles=2 | Napping Kansas driver whose truck sped on to soccer field and killed two won’t be charged
+2026-11-14 09:16:38,889 | INFO | #10 | score=13.51 | sources=2 | articles=2 | Guest Column | Stephen Miller dresses like a reasonable man. But listen to what he says.
+2026-11-14 09:16:38,889 | INFO | #11 | score=13.41 | sources=2 | articles=2 | Microsoft says services fully restored after global outage hits governments
+2026-11-14 09:16:38,889 | INFO | #12 | score=13.20 | sources=2 | articles=2 | SpaceX Starship Flight 15 live updates: Starship heat shield looks good for landing attempt today
+2026-11-14 09:16:38,889 | INFO | #13 | score=13.08 | sources=2 | articles=2 | Schumer allies voice confidence, argue Van Hollen challenge about ending ‘filibuster’
+2026-11-14 09:16:38,889 | INFO | #14 | score=13.07 | sources=2 | articles=2 | Alaskans opt to stick with ranked choice voting
+2026-11-14 09:16:38,889 | INFO | #15 | score=12.87 | sources=2 | articles=2 | A new 'Yalta'? Trump and Putin push for a meeting that Xi is wary of hosting
+2026-11-14 09:16:38,889 | INFO | #16 | score=12.73 | sources=2 | articles=2 | Warner accuses Cricket Australia of 'cover-up'
+2026-11-14 09:16:38,889 | INFO | #17 | score=12.71 | sources=2 | articles=3 | All passengers and crew on New Orleans cruise ship survive crash with tanker on Mississippi River
+2026-11-14 09:16:38,889 | INFO | #18 | score=12.67 | sources=2 | articles=2 | Minnesota heads to Penn State on Saturday after nationwide flight delays
+2026-11-14 09:16:38,889 | INFO | #19 | score=12.58 | sources=2 | articles=2 | Pochettino: It's difficult to turn down United
+2026-11-14 09:16:38,889 | INFO | #20 | score=12.43 | sources=2 | articles=2 | Democrat Jonathan Kreiss-Tomkins wins race for Alaska governor, replaces a Republican
+2026-11-14 09:16:38,889 | INFO | Summarizing stories 1-20 of 100
+2026-11-14 09:16:52,333 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:16:52,521 | INFO | Summarizing stories 21-40 of 100
+2026-11-14 09:17:04,777 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:17:04,780 | INFO | Summarizing stories 41-60 of 100
+2026-11-14 09:17:16,861 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:17:16,863 | INFO | Summarizing stories 61-80 of 100
+2026-11-14 09:17:28,924 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:17:28,931 | INFO | Summarizing stories 81-100 of 100
+2026-11-14 09:17:40,311 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:17:40,324 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/2026-11-14.json
+2026-11-14 09:17:40,325 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/latest.json
+2026-11-14 09:17:40,325 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/2026-11-14.debug.json
+2026-11-14 09:17:40,325 | INFO | Daily RSS news update complete
+2026-11-14 09:17:43,256 | INFO | 2026-11-14: 100 unprocessed stories
+2026-11-14 09:17:43,257 | INFO | Event Memory: stories 1-10 of 100 for 2026-11-14
+2026-11-14 09:17:44,990 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:17:59,664 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:18:00,099 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:00,104 | INFO | Event Memory: stories 11-20 of 100 for 2026-11-14
+2026-11-14 09:18:00,367 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:13,683 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:18:13,981 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:13,995 | INFO | Event Memory: stories 21-30 of 100 for 2026-11-14
+2026-11-14 09:18:14,232 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:26,828 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:18:27,397 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:27,401 | INFO | Event Memory: stories 31-40 of 100 for 2026-11-14
+2026-11-14 09:18:27,606 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:40,207 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:18:40,830 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:40,833 | INFO | Event Memory: stories 41-50 of 100 for 2026-11-14
+2026-11-14 09:18:41,099 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:54,554 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:18:54,827 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:18:54,842 | INFO | Event Memory: stories 51-60 of 100 for 2026-11-14
+2026-11-14 09:18:55,095 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:07,454 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:19:07,682 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:07,686 | INFO | Event Memory: stories 61-70 of 100 for 2026-11-14
+2026-11-14 09:19:08,217 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:20,369 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:19:20,663 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:20,721 | INFO | Event Memory: stories 71-80 of 100 for 2026-11-14
+2026-11-14 09:19:20,961 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:34,249 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:19:34,590 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:34,595 | INFO | Event Memory: stories 81-90 of 100 for 2026-11-14
+2026-11-14 09:19:34,895 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:48,001 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:19:48,360 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:19:48,364 | INFO | Event Memory: stories 91-100 of 100 for 2026-11-14
+2026-11-14 09:19:48,651 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:20:03,946 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:20:04,218 | INFO | HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-11-14 09:20:04,255 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/2026-11-14.enriched.json
+2026-11-14 09:20:04,255 | INFO | Wrote /Users/diegotanton/Developer/AdversarialLLMInvestor/data/enriched_latest.json
+2026-11-14 09:20:04,274 | INFO | Event Memory complete
+2026-11-14 09:20:07,423 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-14 09:20:11,750 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-14 09:20:11,955 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-14 09:20:11,968 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-14 09:20:13,950 | INFO | Email sent successfully
