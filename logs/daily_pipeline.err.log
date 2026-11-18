@@ -27631,3 +27631,31 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-18 10:46:32,625 | INFO | Gilman analyzing stories 1-10 of 100
 2026-11-18 10:48:27,728 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
 2026-11-18 10:48:27,942 | INFO | Gilman analyzing stories 11-20 of 100
+2026-11-18 10:49:53,969 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 10:49:53,981 | INFO | Gilman analyzing stories 21-30 of 100
+2026-11-18 10:51:50,270 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 10:51:50,278 | INFO | Gilman analyzing stories 31-40 of 100
+2026-11-18 10:55:18,597 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 10:55:18,622 | INFO | Gilman analyzing stories 41-50 of 100
+2026-11-18 10:56:56,215 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 10:56:56,226 | INFO | Gilman analyzing stories 51-60 of 100
+2026-11-18 10:59:21,419 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 10:59:21,429 | INFO | Gilman analyzing stories 61-70 of 100
+2026-11-18 11:01:15,898 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 11:01:15,906 | INFO | Gilman analyzing stories 71-80 of 100
+2026-11-18 11:02:58,234 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 11:02:58,241 | INFO | Gilman analyzing stories 81-90 of 100
+2026-11-18 11:04:28,101 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 11:04:28,108 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-18 11:05:46,538 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 11:05:46,580 | INFO | Gilman produced 0 candidates
+2026-11-18 11:05:49,132 | INFO | Starting Brody
+2026-11-18 11:05:49,133 | INFO | Evaluating 0 Gilman candidates
+2026-11-18 11:05:49,139 | INFO | Brody decision: NO_TRADE
+2026-11-18 11:05:49,139 | INFO | Brody complete
+2026-11-18 11:05:51,535 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-18 11:05:55,141 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-18 11:05:55,466 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-18 11:05:55,487 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-18 11:05:57,055 | INFO | Email sent successfully
+Position management: Command '['/Users/diegotanton/opt/anaconda3/envs/news/bin/python', '-u', '-m', 'scripts.position_manager']' returned non-zero exit status 1.
