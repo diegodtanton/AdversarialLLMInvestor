@@ -28013,3 +28013,14 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-19 08:46:06,049 | INFO | Gilman analyzing stories 81-90 of 100
 2026-11-19 08:46:59,317 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
 2026-11-19 08:46:59,327 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-19 08:48:21,520 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-19 08:48:21,555 | INFO | Gilman produced 0 candidates
+2026-11-19 08:48:23,149 | INFO | Starting Brody
+2026-11-19 08:48:23,150 | INFO | Evaluating 0 Gilman candidates
+2026-11-19 08:48:23,155 | INFO | Brody decision: NO_TRADE
+2026-11-19 08:48:23,155 | INFO | Brody complete
+2026-11-19 08:48:25,311 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-19 08:48:29,716 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-19 08:48:29,909 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-19 08:48:29,920 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-19 08:48:32,135 | INFO | Email sent successfully
