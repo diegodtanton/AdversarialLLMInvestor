@@ -31847,3 +31847,25 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://apne
 2026-11-23 10:47:21,521 | INFO | Gilman analyzing stories 41-50 of 100
 2026-11-23 10:48:38,304 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
 2026-11-23 10:48:38,309 | INFO | Gilman analyzing stories 51-60 of 100
+2026-11-23 10:51:37,913 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:51:37,948 | INFO | Gilman analyzing stories 61-70 of 100
+2026-11-23 10:52:53,138 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:52:53,147 | INFO | Gilman analyzing stories 71-80 of 100
+2026-11-23 10:54:40,417 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:54:40,425 | INFO | Gilman analyzing stories 81-90 of 100
+2026-11-23 10:55:50,458 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:55:50,465 | INFO | Gilman analyzing stories 91-100 of 100
+2026-11-23 10:56:47,804 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:56:47,959 | INFO | Gilman produced 2 candidates
+2026-11-23 10:56:51,640 | INFO | Starting Brody
+2026-11-23 10:56:51,640 | INFO | Evaluating 2 Gilman candidates
+2026-11-23 10:56:56,841 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:57:55,950 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:57:55,994 | INFO | Brody decision: NO_TRADE
+2026-11-23 10:57:55,994 | INFO | Brody complete
+2026-11-23 10:58:00,763 | INFO | Generating trading narrative with gpt-5.6-terra
+2026-11-23 10:58:06,998 | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-11-23 10:58:07,433 | WARNING | Trends unavailable: [Errno 11] Resource deadlock avoided
+2026-11-23 10:58:07,448 | INFO | Sending daily brief to dio.tanton@gmail.com
+2026-11-23 10:58:10,137 | INFO | Email sent successfully
+Position management: Command '['/Users/diegotanton/opt/anaconda3/envs/news/bin/python', '-u', '-m', 'scripts.position_manager']' returned non-zero exit status 1.
